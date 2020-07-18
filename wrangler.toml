@@ -1,0 +1,21 @@
+name = "cronycle-mini"
+type = "webpack"
+account_id = "ef40369ec9eae2c1dddebc0071d0e59b"
+#workers_dev = true
+route = "https://boards.bitterbrown.com"
+
+[site]
+bucket = "./dist"
+entry-point = "workers-site"
+#
+#[env.production]
+#name = "deherd-website-prod"
+#account_id = "ef40369ec9eae2c1dddebc0071d0e59b"
+#zone_id = "7711f1d37397a65f0a33021e242b6ce3"
+#route = "https://www.deherd.co.uk/*"
+#
+#[env.staging]
+#name = "deherd-website-staging"
+#account_id = "ef40369ec9eae2c1dddebc0071d0e59b"
+#zone_id = "7711f1d37397a65f0a33021e242b6ce3"
+#route = "https://staging.deherd.co.uk/*"
