@@ -34,7 +34,7 @@ interface BoardTitleProps {
 export const BoardTitle = ({ board }: BoardTitleProps) => {
   const dispatch = useDispatch();
   const itemsCount: number = useSelector(getCurrentBoardItemsCount);
-  const currentBoard: Board = useSelector(getCurrentBoard);
+  const currentBoard: Board | undefined = useSelector(getCurrentBoard);
   const boards: Array<Board> | undefined = useSelector(getBoards);
 
   if (!boards) {

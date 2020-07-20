@@ -10,7 +10,7 @@ import { Size } from '../../styles/vars';
 
 const LogoEl = styled(Logo)`
   cursor: pointer;
-`
+`;
 const HeaderRow = styled(Row)`
   background: antiquewhite;
   min-height: ${Size.HEADER_HEIGHT}px;

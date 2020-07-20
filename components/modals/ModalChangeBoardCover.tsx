@@ -19,6 +19,7 @@ export const ModalChangeBoardCover = ({ onClose, boardId }: ModalChangeBoardCove
     formData.append(
       "file",
       file!,
+      // @ts-ignore
       file!.name
     );
     formData.append('image_height', '500');
@@ -32,6 +33,7 @@ export const ModalChangeBoardCover = ({ onClose, boardId }: ModalChangeBoardCove
   }
 
   const onFileChange = (e: SyntheticEvent) => {
+    // @ts-ignore
     const file: File = e.target.files[0];
     setFile(file);
     const fileUrl: string = URL.createObjectURL(file);
