@@ -6,6 +6,7 @@ import AppHeader from '../shared/AppHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getToken, getUser } from '../../data/store/selectors';
 import { setToken, setUser } from '../../data/store/actions';
+import { Size } from '../../styles/vars';
 
 const { Content } = Layout;
 
@@ -49,10 +50,10 @@ export default function LoggedPage({ children }: { children: ReactNode; }) {
   });
 
   return (
-    <Layout style={{ width: '100%', height: '100%' }}>
+    <Layout style={{ width: '100%', height: '100vh' }}>
       <Spin spinning={!ready}>
         <AppHeader />
-        <Content>
+        <Content style={{height: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
           {ready && children}
         </Content>
       </Spin>

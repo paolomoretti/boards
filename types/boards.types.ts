@@ -43,22 +43,13 @@ export interface BoardTile {
   user_tags: []
 }
 
-export interface BoardTilesResponse {
-  data?: {
-    results: Array<BoardTile>;
-    num_found: number;
-  }
-  error?: string;
-  mutate: Function;
-}
-
 export interface Article {
   // assets: [{id: 783241742, media_type: "image",…}, {id: 783242348, media_type: "image",…}]
   // author_email: null
   // author_url: null
   // collapsed: false
   // comment_count: null
-  // content: "<p>Etsy uses cookies and similar technologies to give you a better experience, enabling things like:</p> <ul>↵<li>basic site functions</li> <li>ensuring secure, safe transactions</li> <li>secure account login</li> <li>remembering account, browser, and regional preferences</li> <li>remembering privacy and security settings</li> <li>analysing site traffic and usage</li> <li>personalised search, content, and recommendations</li> <li>helping sellers understand their audience</li> <li>showing relevant, targeted ads on and off Etsy</li> </ul>↵<p>Detailed information can be found in Etsy’s <a href="https://www.etsy.com/uk/legal/cookies-and-tracking-technologies">Cookies &amp; Similar Technologies Policy</a> and our <a href="https://www.etsy.com/uk/legal/privacy">Privacy Policy</a>.</p>      Always on  <h2>Required Cookies &amp; Technologies</h2> <p>Some of the technologies we use are necessary for critical functions like security and site integrity, account authentication, security and privacy preferences, internal site usage and maintenance data, and to make the site work correctly for browsing and transactions.</p>     Off     <h2>Site Customisation</h2> <p>Cookies and similar technologies are used to improve your experience, to do things like:</p> <ul>↵<li>remember your login, general, and regional preferences</li> <li>personalise content, search, recommendations, and offers</li> </ul>↵<p>Without these technologies, things like personalised recommendations, your account preferences, or localisation may not work correctly. Find out more in our <a href="https://www.etsy.com/uk/legal/cookies-and-tracking-technologies">Cookies &amp; Similar Technologies Policy</a>.</p>     Off     <h2>Personalised Advertising</h2> <p>These technologies are used for things like:</p> <ul>↵<li>personalised ads</li> <li>to limit how many times you see an ad</li> <li>to understand usage via Google Analytics</li> <li>to understand how you got to Etsy</li> <li>to ensure that sellers understand their audience and can provide relevant ads</li> </ul>↵<p>We do this with social media, marketing, and analytics partners (who may have their own information they’ve collected). Saying no will not stop you from seeing Etsy ads, but it may make them less relevant or more repetitive. Find out more in our <a href="https://www.etsy.com/uk/legal/cookies-and-tracking-technologies">Cookies &amp; Similar Technologies Policy</a>.</p>"
+  content: string;
   //   created_at: 1593301815
   description: string;
   // external_tags: []

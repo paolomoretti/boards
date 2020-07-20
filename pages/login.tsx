@@ -1,6 +1,6 @@
-import * as React from "react";
-import {Card, Layout, PageHeader, Form, Input, Button, Spin, message} from "antd";
-import {useState} from "react";
+import * as React from 'react';
+import { useState } from 'react';
+import { Button, Card, Form, Input, Layout, message, PageHeader, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import * as Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';

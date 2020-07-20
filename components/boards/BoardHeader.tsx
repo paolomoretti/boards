@@ -1,23 +1,17 @@
-import { Button, Modal, PageHeader, Typography } from 'antd';
+import { Button, Modal, PageHeader } from 'antd';
 import * as React from 'react';
 import { useRouter } from 'next/router';
-import styled, { CSSProperties } from 'styled-components';
+import { CSSProperties } from 'styled-components';
 import Search from 'antd/lib/input/Search';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBoardContent, setBoardTilesParams, updateCurrentBoardTiles } from '../../data/store/actions';
 import { ModalAddBoardContent } from '../modals/ModalAddBoardContent';
 import { addBoardTile } from '../../utils/fetchers/addBoardTile';
-import { getBoardTileParams, getCurrentBoardItemsCount, getCurrentBoardTiles } from '../../data/store/selectors';
+import { getBoardTileParams, getCurrentBoardTiles } from '../../data/store/selectors';
 import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types';
 import BoardTileTagsSelector from './BoardTileTagsSelector';
-
-const { Text } = Typography;
-const ItemsCountSpan = styled(Text)`
-  font-size: 13px;
-  margin-left: 13px;
-  font-weight: 300;
-`
+import { BoardTitle } from './BoardTitle';
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
   if (!board) {
@@ -28,7 +22,6 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
   const dispatch = useDispatch();
   const boardTiles: Array<BoardTile> = useSelector(getCurrentBoardTiles);
   const getTileParams: Partial<GetBoardTilesParams> = useSelector(getBoardTileParams);
-  const itemsCount: number = useSelector(getCurrentBoardItemsCount);
   const pageHeaderStyle: CSSProperties = {
     backgroundColor: 'white',
     padding: '5px 24px'
@@ -57,10 +50,7 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
 
   return (
     <PageHeader
-      title={([
-        <span key={'title'}>{board ? board.name : 'Loading ...'}</span>,
-        itemsCount && <ItemsCountSpan key={'count'} type={'secondary'}>{itemsCount} items</ItemsCountSpan>
-      ])}
+      title={<BoardTitle board={board} />}
       onBack={() => router.push(`/`, '/', { shallow: true })}
       style={pageHeaderStyle}
       extra={[

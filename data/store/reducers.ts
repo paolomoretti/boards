@@ -1,7 +1,7 @@
 import { AppState } from '../../types/app.types';
 import { Action, ActionTypes } from './actions';
 import getToken from '../../utils/data/getToken';
-import { BoardTile } from '../../types/boards.types';
+import { Board, BoardTile } from '../../types/boards.types';
 
 export const initialState = Object.freeze<AppState>({
   boardTilesParams: {
@@ -20,8 +20,12 @@ export const initialState = Object.freeze<AppState>({
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
+    case ActionTypes.CLOSE_CURRENT_BOARD:
+      return { ...state, currentBoardItemsCount: 0, currentBoardTiles: [] };
+
     case ActionTypes.UPDATE_BOARDS:
-      return { ...state, boards: [...action.payload]}
+      const boards: Array<Board> = action.payload.sort((a: Board, b: Board) => b.last_activity_date - a.last_activity_date)
+      return { ...state, boards: [...boards]}
 
     case ActionTypes.ADD_BOARD_CONTENT:
       const tileMock: Partial<BoardTile> = {
@@ -38,6 +42,9 @@ export default (state = initialState, action: Action) => {
 
     case ActionTypes.UPDATE_CURRENT_BOARD_TILES:
       return { ...state, currentBoardTiles: [...action.payload]};
+
+    case ActionTypes.SET_CURRENT_BOARD:
+      return { ...state, currentBoard: action.payload };
 
     case ActionTypes.UPDATE_CURRENT_BOARD_ITEMS_COUNT:
       return { ...state, currentBoardItemsCount: action.payload };

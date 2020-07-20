@@ -17,4 +17,13 @@ export const getBoardTiles = (boardId: number, params: GetBoardTilesParams): Pro
     }
   })
     .then(res => res.json())
+    .then(res => {
+      res.results = res.results.map((tile: BoardTile) => {
+        if (tile.tile_type === 'link') {
+
+        }
+        return tile;
+      });
+      return res;
+    })
 }

@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import { getUser } from '../../data/store/selectors';
 import { Size } from '../../styles/vars';
 
+const LogoEl = styled(Logo)`
+  cursor: pointer;
+`
 const HeaderRow = styled(Row)`
   background: antiquewhite;
   min-height: ${Size.HEADER_HEIGHT}px;
@@ -26,7 +29,7 @@ export default function AppHeader() {
         <Col flex={100}>
           <Link href={`/`}>
             <span>
-              <Logo />
+              <LogoEl />
             </span>
           </Link>
         </Col>

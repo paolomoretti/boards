@@ -8,6 +8,7 @@ export interface AppState {
 
   boards?: Array<Board>;
   boardTilesParams: GetBoardTilesParams;
+  currentBoard?: Board;
   currentBoardTiles: Array<BoardTile>;
   currentBoardItemsCount: number;
 }

@@ -47,7 +47,6 @@ export default function Home() {
       setLoading(true);
       getBoards()
         .then(boards => {
-          boards = boards.sort((a: Board, b: Board) => b.last_activity_date - a.last_activity_date);
           dispatch(updateBoards(boards));
           setLoading(false);
         })
@@ -65,26 +64,28 @@ export default function Home() {
   return (
     <LoggedPage>
       <Spin spinning={!boards}>
-        {boards && Array.isArray(boards) ? (
-          <BoardsContainer>
-            <Affix offsetTop={Size.HEADER_HEIGHT} style={{zIndex: 900}}>
-              <BoardsHeader boards={boards} onSelect={navigateToBoard} />
-            </Affix>
-            <MasonryContainer
-              breakpointCols={cardColBreakpoints}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-              {boards.map((board: Board) =>
-                <Link key={board.id} href={'/boards/[id]'} as={`/boards/${board.id}`}>
-                  <div>
-                    <BoardCard board={board} />
-                  </div>
-                </Link>
-              )}
-            </MasonryContainer>
-          </BoardsContainer>
-        ) : null}
+        <div style={{height: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
+          {boards && Array.isArray(boards) ? (
+            <BoardsContainer>
+              <Affix offsetTop={Size.HEADER_HEIGHT} style={{ zIndex: 900 }}>
+                <BoardsHeader boards={boards} onSelect={navigateToBoard}/>
+              </Affix>
+              <MasonryContainer
+                breakpointCols={cardColBreakpoints}
+                className="my-masonry-grid"
+                columnClassName="my-masonry-grid_column"
+              >
+                {boards.map((board: Board) =>
+                  <Link key={board.id} href={'/boards/[id]'} as={`/boards/${board.id}`}>
+                    <div>
+                      <BoardCard board={board}/>
+                    </div>
+                  </Link>
+                )}
+              </MasonryContainer>
+            </BoardsContainer>
+          ) : null}
+        </div>
       </Spin>
     </LoggedPage>
   );

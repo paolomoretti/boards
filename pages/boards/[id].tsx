@@ -12,7 +12,12 @@ import _ from 'lodash';
 import { BoardHeader } from '../../components/boards/BoardHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardTileParams, getCurrentBoardTiles, getToken } from '../../data/store/selectors';
-import { setBoardTilesParams, updateCurrentBoardItemsCount, updateCurrentBoardTiles } from '../../data/store/actions';
+import {
+  setBoardTilesParams,
+  setCurrentBoard,
+  updateCurrentBoardItemsCount,
+  updateCurrentBoardTiles
+} from '../../data/store/actions';
 import { getBoardTiles } from '../../utils/fetchers/getBoardTiles';
 import BoardCurrentFilter from '../../components/boards/BoardCurrentFilter';
 import { Size } from '../../styles/vars';
@@ -32,8 +37,16 @@ export default function SingleBoardPage() {
   const [ isLoading, setLoading ] = useState(false);
   const [ canLoadMore, setCanLoadMore ] = useState(true);
   const [ lastFetchParams, setLastFetchParams ] = useState(getTilesParams);
+  const [ lastLoadedBoard, setLastLoadedBoard ] = useState();
   const { id } = router.query as { id: string; };
-  let { data: board, error }: { data?: Board; error?: any; } = useSWR(`/boards/${id}`, () => getBoard(token!, parseInt(id)));
+  let { data: board, error }: { data?: Board; error?: any; } = useSWR(`/boards/${id}`, () => {
+    return getBoard(token!, parseInt(id))
+      .then((b: Board) => {
+        dispatch(setCurrentBoard(b));
+        setLastLoadedBoard(b);
+        return b;
+      });
+  });
 
   if (error) {
     return message.error(error);
@@ -48,22 +61,15 @@ export default function SingleBoardPage() {
       max_timestamp: boardTiles![boardTiles!.length - 1].created_at
     });
     dispatch(setBoardTilesParams(newParams));
-    // const newTilesData = await getBoardTiles(id, newParams);
-    // setCanLoadMore(newTilesData.results.length === newParams.per_page);
-    //
-    // const newTiles = _.chain(boardTiles)
-    //   .concat(newTilesData.results)
-    //   .uniqBy('id')
-    //   .sortBy('-created_at')
-    //   .value();
-    // dispatch(updateCurrentBoardTiles(newTiles));
-    // console.log(`load more tiles`, newTilesData.results);
-    // console.log(`newTilesList`, newTiles);
-    // setLoadingMore(false);
   }
 
   useEffect(() => {
-    if (id && (!boardTiles || boardTiles.length === 0) || JSON.stringify(lastFetchParams) !== JSON.stringify(getTilesParams)) {
+    if (id && (
+      !boardTiles ||
+      boardTiles.length === 0) ||
+      JSON.stringify(lastFetchParams) !== JSON.stringify(getTilesParams) ||
+      (lastLoadedBoard && id.toString() !== lastLoadedBoard.id.toString())
+    ) {
       setLastFetchParams(getTilesParams);
       if (!isLoadingMore) {
         setLoading(true);
@@ -89,7 +95,7 @@ export default function SingleBoardPage() {
           <BoardHeader board={board!} />
         </Affix>
         <BoardCurrentFilter />
-        {boardTiles && (
+        {boardTiles && board && (
           <BoardTilesList
             tiles={boardTiles}
             board={board!}

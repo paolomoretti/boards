@@ -7,6 +7,7 @@ import { updateBoards } from '../../data/store/actions';
 import { deleteBoard } from '../../utils/fetchers/deleteBoard';
 import * as _ from 'lodash';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
+import BoardCardCover from './BoardCardCover';
 
 export default function BoardCard({ board }: { board: Board; }) {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function BoardCard({ board }: { board: Board; }) {
     <Card
       bodyStyle={{display: 'none'}}
       title={board.name}
-      cover={<img src={board.avatar}/>}
+      cover={<BoardCardCover board={board} />}
       extra={[
         <div onClick={stopBubblingUp}>
           <Popconfirm
