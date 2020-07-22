@@ -2,9 +2,10 @@ import * as React from 'react';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { BoardTile } from './BoardTile';
+import { Colors } from '../../styles/vars';
 
 const BoardTileNoteContainer = styled(BoardTile)`
-  background-color: #fef2da;
+  background-color: ${Colors.NOTE};
   
   .ant-card-actions {
     background-color: rgba(0, 0, 0, .1);

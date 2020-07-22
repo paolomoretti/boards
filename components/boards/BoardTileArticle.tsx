@@ -6,6 +6,7 @@ import Paragraph from 'antd/lib/typography/Paragraph';
 import { BoardTile } from './BoardTile';
 import { ReactNode } from 'react';
 import { Image } from '../shared/Image';
+import { Quote } from '../shared/Quote';
 
 const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
@@ -19,10 +20,13 @@ const ArticleUrl = styled.a`
 interface BoardTileArticleProps {
   link: Article;
   actions: any;
+  summary?: string;
+  onChangeSummary?(newSummary: string): void;
   children: ReactNode;
 }
 
-export default function BoardTileArticle({ link, actions, children }: BoardTileArticleProps) {
+export default function BoardTileArticle({ link, actions, summary, onChangeSummary, children }: BoardTileArticleProps) {
+  onChangeSummary = onChangeSummary || console.log;
   return (
     <BoardTile
       size={'small'}
@@ -38,6 +42,9 @@ export default function BoardTileArticle({ link, actions, children }: BoardTileA
         title={link.name}
         description={<ArticleUrl href={link.url} target={'_blank'}>{link.url_host}</ArticleUrl>}
       />
+      {summary && (
+        <Quote editable={{ onChange: onChangeSummary }} text={summary} />
+      )}
       <ParagraphStyled
         ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>{link.description}</ParagraphStyled>
       {children}

@@ -43,6 +43,12 @@ export default (state = initialState, action: Action) => {
     case ActionTypes.UPDATE_CURRENT_BOARD_TILES:
       return { ...state, currentBoardTiles: [...action.payload]};
 
+    case ActionTypes.UPDATE_CURRENT_BOARD_TILE:
+      const tiles: Array<BoardTile> = state.currentBoardTiles.map(tile =>
+        tile.id === action.payload.id ? action.payload : tile
+      )
+      return { ...state, currentBoardTiles: [...tiles]};
+
     case ActionTypes.SET_CURRENT_BOARD:
       return { ...state, currentBoard: action.payload };
 

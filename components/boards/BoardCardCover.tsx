@@ -33,7 +33,8 @@ export default function BoardCardCover({ board }: { board: Board; }) {
     const modal = Modal.info({
       title: 'Change board cover',
       content: <ModalChangeBoardCover boardId={board.id} onClose={() => modal.destroy()} />,
-      className: 'modal-no-buttons'
+      className: 'modal-no-buttons',
+      maskClosable: true
     });
   }
 

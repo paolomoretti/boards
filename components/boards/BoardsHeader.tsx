@@ -54,7 +54,8 @@ export default function BoardsHeader({ boards, onSelect }: BoardSearchProps) {
     const modal = Modal.info({
       title: 'Create board',
       content: <ModalAddBoard onClose={modalClose} onAdd={onAddBoard} />,
-      className: 'modal-no-buttons'
+      className: 'modal-no-buttons',
+      maskClosable: true
     });
   }
 

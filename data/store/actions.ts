@@ -10,6 +10,7 @@ export enum ActionTypes {
   // UNSHIFT_BOARD_TILE,
   UPDATE_BOARDS,
   UPDATE_CURRENT_BOARD_TILES,
+  UPDATE_CURRENT_BOARD_TILE,
   UPDATE_CURRENT_BOARD_ITEMS_COUNT,
   SET_CURRENT_BOARD,
   CLOSE_CURRENT_BOARD,
@@ -43,6 +44,11 @@ export const setBoardTilesParams = (params: Partial<GetBoardTilesParams>) => ({
 export const updateCurrentBoardTiles = (tiles: Array<BoardTile>) => ({
   type: ActionTypes.UPDATE_CURRENT_BOARD_TILES,
   payload: tiles
+});
+
+export const updateCurrentBoardTile = (tile: BoardTile) => ({
+  type: ActionTypes.UPDATE_CURRENT_BOARD_TILE,
+  payload: tile
 });
 
 export const updateCurrentBoardItemsCount = (count: number) => ({

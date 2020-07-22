@@ -11,6 +11,11 @@ import BoardTileExtraContent from './BoardTileExtraContent';
 import BoardItemArticle from './BoardItemArticle';
 import BoardTileNote from './BoardTileNote';
 import { deleteBoardTile } from '../../utils/fetchers/deleteBoardTile';
+import { BoardTileFeedback } from './BoardTileFeedback';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentBoardTiles } from '../../data/store/selectors';
+import { updateCurrentBoardTile } from '../../data/store/actions';
+import { updateBoardTile } from '../../utils/fetchers/updateBoardTile';
 
 const TileContainer = styled.div`
   padding: 10px;
@@ -23,8 +28,23 @@ const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
 `;
 
-export default function BoardTileCard({ tile, boardId }: { tile: BoardTile; boardId: number; }) {
+export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardTile; boardId: number; }) {
+  const dispatch = useDispatch();
   const [deleted, setDeleted] = useState(false);
+  const tiles: BoardTile[] = useSelector(getCurrentBoardTiles);
+  const tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
+
+  const onChangeArticleSummary = (summary: string) => {
+    const updatedTile: BoardTile = Object.assign({}, tile, {
+      link: {
+        ...tile.link,
+        user_summary: summary
+      }
+    });
+    updateBoardTile(boardId, tile.id, { update_tile_text: summary })
+      .then(tile => dispatch(updateCurrentBoardTile(tile)));
+    dispatch(updateCurrentBoardTile(updatedTile));
+  };
 
   useEffect(() => {
     if (deleted) {
@@ -42,7 +62,10 @@ export default function BoardTileCard({ tile, boardId }: { tile: BoardTile; boar
       {tile.tile_type === 'link' && (
         <BoardTileArticle
           link={tile.link!.link}
+          summary={tile.link!.user_summary}
+          onChangeSummary={onChangeArticleSummary}
           actions={[
+            <BoardTileFeedback tile={tile} boardId={boardId} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
               title="Are you sure you want to delete this content?"
@@ -61,6 +84,7 @@ export default function BoardTileCard({ tile, boardId }: { tile: BoardTile; boar
         <BoardTileFile
           file={tile.file!}
           actions={[
+            <BoardTileFeedback tile={tile} boardId={boardId} />,
             <EditOutlined />,
             <CloudDownloadOutlined />,
             <Popconfirm
@@ -80,6 +104,7 @@ export default function BoardTileCard({ tile, boardId }: { tile: BoardTile; boar
       {tile.tile_type === 'note' && (
         <BoardTileNote
           actions={[
+            <BoardTileFeedback tile={tile} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
               title="Are you sure you want to delete this content?"

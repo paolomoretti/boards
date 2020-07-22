@@ -12,7 +12,10 @@ export enum Size {
 }
 
 export enum Colors {
-  APP_BG = '#f0f2f5'
+  APP_BG = '#f0f2f5',
+  PRIMARY = '#861d1b',
+  SUCCESS = '#52c41a',
+  NOTE = '#fef2da'
 }
 export enum FileTypeIcon {
   // @ts-ignore

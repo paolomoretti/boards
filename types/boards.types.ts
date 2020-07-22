@@ -14,8 +14,8 @@ export interface BoardTile {
   loading?: boolean;
   created_at: number;
   // created_by_me: true
-  // downvoted: false
-  // downvotes: 0
+  downvoted: boolean;
+  downvotes: 0;
   // engagement: 0
   // grouped_on_tile_id: 5938777
   // highlights: null
@@ -29,7 +29,7 @@ export interface BoardTile {
     // link: {id: 1803331209, name: "Scandinavian Style Birch Plywood Desk with Hard Wearing",…}
     // tile: {id: 5938780, tile_type: "link",…}
     // user: {id: 924, full_name: "Paolo Moretti", image_url: null, username: "little_brown", avatar: {,…},…}
-    // user_summary: ""
+    user_summary?: string;
   };
   note?: Note | DummyNote;
   // link: {id: 5919179, created_at: 1593302249, comment_count: 0, user_summary: "",…}
@@ -37,8 +37,8 @@ export interface BoardTile {
   file?: File;
   tile_type: "link" | "note" | "file";
   // updated_at: 1593302249
-  // upvoted: false
-  // upvotes: 0
+  upvoted: boolean;
+  upvotes: 0;
   // user: {id: 924, full_name: "Paolo Moretti", image_url: null, username: "little_brown", avatar: {,…},…}
   user_tags: []
 }

@@ -1,11 +1,18 @@
 import * as React from 'react';
 import { Button, Form, Input, message, Typography } from 'antd';
-import { PaperClipOutlined } from '@ant-design/icons';
+import { PaperClipOutlined, TagsOutlined } from '@ant-design/icons';
 import { ButtonHolder } from '../../styles/helpers';
 import { Store } from 'rc-field-form/lib/interface';
+import styled from 'styled-components';
 
 const { TextArea } = Input;
 const { Paragraph } = Typography;
+const ExtrasParagraph = styled(Paragraph)`
+  padding: 3px 0 0;
+  a {
+    margin-left: .7em;
+  }
+`
 
 interface ModalAddBoardContentProps {
   boardId: number;
@@ -23,14 +30,17 @@ export const ModalAddBoardContent = ({ onClose, onAdd }: ModalAddBoardContentPro
   }
   return (
     <Form onFinish={onAddContent}>
-      <Form.Item name="content">
+      <Form.Item name="content" style={{margin: 0}}>
         <TextArea autoSize={{ minRows: 3, maxRows: 8 }} autoFocus={true} />
       </Form.Item>
-      <Paragraph style={{textAlign: 'right'}}>
+      <ExtrasParagraph style={{textAlign: 'right', marginTop: 0}}>
+        <a>
+          <TagsOutlined /> Add tags
+        </a>
         <a>
           <PaperClipOutlined /> Attach file
         </a>
-      </Paragraph>
+      </ExtrasParagraph>
       <ButtonHolder>
         <Button type={'dashed'} onClick={onClose}>Cancel</Button>
         <Button type={'primary'} htmlType="submit">Add</Button>

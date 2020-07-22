@@ -1,7 +1,7 @@
 import { Button, Modal, PageHeader } from 'antd';
 import * as React from 'react';
 import { useRouter } from 'next/router';
-import { CSSProperties } from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 import Search from 'antd/lib/input/Search';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,12 @@ import { getBoardTileParams, getCurrentBoardTiles } from '../../data/store/selec
 import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types';
 import BoardTileTagsSelector from './BoardTileTagsSelector';
 import { BoardTitle } from './BoardTitle';
+
+const PageHeaderStyled = styled(PageHeader)`
+  .ant-page-header-heading-title {
+    line-height: 1em;
+  }
+`
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
   if (!board) {
@@ -39,7 +45,8 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
     const modal = Modal.info({
       title: 'Add content',
       content: <ModalAddBoardContent boardId={board.id} onClose={modalClose} onAdd={onAdd} />,
-      className: 'modal-no-buttons'
+      className: 'modal-no-buttons',
+      maskClosable: true
     });
   }
 
@@ -49,7 +56,7 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
   }
 
   return (
-    <PageHeader
+    <PageHeaderStyled
       title={<BoardTitle board={board} />}
       onBack={() => router.push(`/`, '/', { shallow: true })}
       style={pageHeaderStyle}

@@ -6,9 +6,14 @@ import * as Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
 import { setToken, setUser } from '../data/store/actions';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
+import styled from 'styled-components';
+import GuestPage from '../components/layouts/GuestPage';
 
 const { Content } = Layout;
-
+const LoginCard = styled(Card)`
+  max-width: 400px;
+  margin: 0 auto;
+`
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -51,17 +56,22 @@ export default function Login() {
   const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
     console.log('Failed:', errorInfo);
   };
+  const layout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 17 },
+  };
 
   return (
-    <Layout>
+    <GuestPage>
       <PageHeader
         // onBack={() => null}
         title="Boards"
       />
       <Content style={{padding: '0 20px 20px'}}>
-        <Card title={'Sign in to boards'}>
+        <LoginCard title={'Sign in'}>
           <Spin spinning={loading}>
             <Form
+              {...layout}
               name="basic"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -89,8 +99,8 @@ export default function Login() {
               </Form.Item>
             </Form>
           </Spin>
-        </Card>
+        </LoginCard>
       </Content>
-    </Layout>
+    </GuestPage>
   )
 }
