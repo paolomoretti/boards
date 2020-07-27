@@ -27,10 +27,6 @@ const LoadMoreContainer = styled.div`
   margin-top: 20px;
 `;
 
-// export class SingleBoardPage extends React.Component<any, any> {
-//
-// }
-
 export default function SingleBoardPage() {
   const router = useRouter()
   const dispatch = useDispatch();

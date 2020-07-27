@@ -14,10 +14,12 @@ import BoardTileTagsSelector from './BoardTileTagsSelector';
 import { BoardTitle } from './BoardTitle';
 
 const PageHeaderStyled = styled(PageHeader)`
+  box-shadow: 0px 10px 5px -7px #f0f2f5;
+
   .ant-page-header-heading-title {
     line-height: 1em;
   }
-`
+`;
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
   if (!board) {
@@ -61,7 +63,7 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
       onBack={() => router.push(`/`, '/', { shallow: true })}
       style={pageHeaderStyle}
       extra={[
-        <BoardTileTagsSelector key={'tags'} board={board} />,
+        <BoardTileTagsSelector key={'tags'} />,
         <Search
           style={{maxWidth: 200}}
           key={'search'}

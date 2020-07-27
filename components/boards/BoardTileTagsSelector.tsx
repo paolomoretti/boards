@@ -5,16 +5,14 @@ import { DownOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import * as _ from "lodash";
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardTileParams } from '../../data/store/selectors';
+import { getBoardTileParams, getCurrentBoard } from '../../data/store/selectors';
 import { setBoardTilesParams } from '../../data/store/actions';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
 
-interface BoardTileTagsSelectorProps {
-  board: Board;
-}
-
-export default function BoardTileTagsSelector({ board }: BoardTileTagsSelectorProps) {
+export default function BoardTileTagsSelector() {
   const dispatch = useDispatch();
+  const board: Board = useSelector(getCurrentBoard)!;
+
   if (!board.board_tags || board.board_tags.length === 0) {
     return null;
   }

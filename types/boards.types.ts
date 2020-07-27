@@ -40,7 +40,7 @@ export interface BoardTile {
   upvoted: boolean;
   upvotes: 0;
   // user: {id: 924, full_name: "Paolo Moretti", image_url: null, username: "little_brown", avatar: {,…},…}
-  user_tags: []
+  user_tags: Array<string>;
 }
 
 export interface Article {
