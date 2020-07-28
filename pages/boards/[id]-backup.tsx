@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { BoardHeader } from '../../components/boards/BoardHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardTileParams, getCurrentBoardTiles, getToken } from '../../data/store/selectors';
+import { getBoardTileParams, getCurrentBoardTiles } from '../../data/store/selectors';
 import {
   setBoardTilesParams,
   setCurrentBoard,
@@ -32,7 +32,6 @@ export default function SingleBoardPage() {
   const dispatch = useDispatch();
   const getTilesParams = useSelector(getBoardTileParams);
   const boardTiles = useSelector(getCurrentBoardTiles);
-  const token = useSelector(getToken);
   const [ isLoadingMore, setLoadingMore ] = useState(false);
   const [ isLoading, setLoading ] = useState(false);
   const [ canLoadMore, setCanLoadMore ] = useState(true);

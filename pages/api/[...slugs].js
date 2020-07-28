@@ -34,7 +34,14 @@ export default (req, res) => {
   // console.log(`[fetch] ${req.url}`, fetchOptions);
   fetch(req.url, fetchOptions)
     .then((data) => data.json())
-    .then((data) => res.json(data))
+    .then((data) => {
+      try {
+        return res.json(data);
+      } catch (err) {
+        console.log(`Error returning json response`);
+        return data;
+      }
+    })
     .catch((err) => {
       res.status(500).send({ error: err });
     });

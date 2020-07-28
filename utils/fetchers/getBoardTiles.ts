@@ -6,6 +6,10 @@ export const getBoardTiles = (boardId: number, params: GetBoardTilesParams): Pro
     return Promise.resolve({ results: [], num_found: 0 });
   }
   const queryParams: string = Object.keys(params).reduce((paramsString: string, paramKey: any) => {
+    if (paramKey === 'filters') {
+      // @ts-ignore
+      return `${paramsString}&filters[]=${encodeURIComponent(params[paramKey].join(','))}`
+    }
     // @ts-ignore
     return `${paramsString}&${paramKey}=${encodeURIComponent(params[paramKey])}`;
   }, '')

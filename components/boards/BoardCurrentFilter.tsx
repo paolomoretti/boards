@@ -27,6 +27,13 @@ export default function BoardCurrentFilter() {
     dispatch(setBoardTilesParams(newFilterParams));
   }
 
+  const removeFilter = (filter: string) => {
+    const newFilterParams: Partial<GetBoardTilesParams> = Object.assign({}, filterParams, {
+      filters: _.without(filterParams.filters, filter)
+    });
+    dispatch(setBoardTilesParams(newFilterParams));
+  }
+
   const clearAll = () => {
     dispatch(setBoardTilesParams(initialState as any));
   }
@@ -40,7 +47,7 @@ export default function BoardCurrentFilter() {
 
   if (filterParams.search_text && filterParams.search_text.length > 0) {
     currentFilters.push(
-      <Col>
+      <Col key={'search text'}>
         <Text>
           <strong>Keyword: </strong>
           <Tag closable={true} onClose={() => removeKeyword()}>{filterParams.search_text}</Tag>
@@ -49,9 +56,22 @@ export default function BoardCurrentFilter() {
     )
   }
 
+  if (filterParams.filters && filterParams.filters.length > 0) {
+    currentFilters.push(
+      <Col key={'filters'}>
+        <Text>
+          <strong>Filters: </strong>
+          {filterParams.filters.map((filter: string) => (
+            <Tag key={filter} closable={true} onClose={() => removeFilter(filter)}>{filter.replace(/_/gi, ' ')}</Tag>
+          ))}
+        </Text>
+      </Col>
+    )
+  }
+
   if (filterParams.tags && filterParams.tags.length > 0) {
     currentFilters.push(
-      <Col>
+      <Col key={'tags'}>
         <Text>
           <strong>Tags: </strong>
           {filterParams.tags.split(',').map((tag: string) => (

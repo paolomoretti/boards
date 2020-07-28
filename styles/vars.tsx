@@ -15,6 +15,7 @@ export enum Colors {
   APP_BG = '#f0f2f5',
   PRIMARY = '#861d1b',
   SUCCESS = '#52c41a',
+  ERROR = '#c00',
   NOTE = '#fef2da'
 }
 export enum FileTypeIcon {

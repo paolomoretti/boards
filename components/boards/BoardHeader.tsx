@@ -12,6 +12,7 @@ import { getBoardTileParams, getCurrentBoardTiles } from '../../data/store/selec
 import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types';
 import BoardTileTagsSelector from './BoardTileTagsSelector';
 import { BoardTitle } from './BoardTitle';
+import BoardTileApprovedSelector from './BoardTileApprovedSelector';
 
 const PageHeaderStyled = styled(PageHeader)`
   box-shadow: 0px 10px 5px -7px #f0f2f5;
@@ -64,6 +65,7 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
       style={pageHeaderStyle}
       extra={[
         <BoardTileTagsSelector key={'tags'} />,
+        <BoardTileApprovedSelector />,
         <Search
           style={{maxWidth: 200}}
           key={'search'}

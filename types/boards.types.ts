@@ -9,7 +9,7 @@ export interface Board {
 }
 
 export interface BoardTile {
-  // approved: boolean;
+  approved: boolean;
   // comment_count: 0
   loading?: boolean;
   created_at: number;
@@ -114,4 +114,5 @@ export interface GetBoardTilesParams {
   include_tweets: boolean;
   max_timestamp?: number;
   tags?: string;
+  filters?: Array<string>;
 }

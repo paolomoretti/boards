@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { Article, BoardTile, Note } from '../../types/boards.types';
 import styled from 'styled-components';
@@ -16,12 +17,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentBoardTiles } from '../../data/store/selectors';
 import { updateCurrentBoardTile } from '../../data/store/actions';
 import { updateBoardTile } from '../../utils/fetchers/updateBoardTile';
+import { BoardTileStar } from './BoardTileStar';
+import { Colors } from '../../styles/vars';
 
 const TileContainer = styled.div`
   padding: 10px;
   
   &.is-loading {
     filter: grayscale(1);
+  }
+  &.approved {
+    .ant-card {
+      border-color: ${Colors.PRIMARY};
+    }
   }
 `;
 const ParagraphStyled = styled(Paragraph)`
@@ -33,6 +41,18 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
   const [deleted, setDeleted] = useState(false);
   const tiles: BoardTile[] = useSelector(getCurrentBoardTiles);
   const tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
+
+  const getClassNames = (tile: BoardTile): string => {
+    let classNames: Array<string> = [];
+    if (tile.approved) {
+      classNames.push('approved');
+    }
+    if (tile.loading) {
+      classNames.push('is-loading');
+    }
+
+    return classNames.join(' ');
+  }
 
   const onChangeArticleSummary = (summary: string) => {
     const updatedTile: BoardTile = Object.assign({}, tile, {
@@ -58,7 +78,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
   }
 
   return (
-    <TileContainer className={tile.loading ? 'is-loading' : ''}>
+    <TileContainer className={getClassNames(tile)}>
       {tile.tile_type === 'link' && (
         <BoardTileArticle
           link={tile.link!.link}
@@ -66,6 +86,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
           onChangeSummary={onChangeArticleSummary}
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileStar tile={tile} boardId={boardId} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
               title="Are you sure you want to delete this content?"
@@ -85,6 +106,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
           file={tile.file!}
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileStar tile={tile} boardId={boardId} />,
             <EditOutlined />,
             <CloudDownloadOutlined />,
             <Popconfirm
@@ -104,7 +126,8 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
       {tile.tile_type === 'note' && (
         <BoardTileNote
           actions={[
-            <BoardTileFeedback tile={tile} />,
+            <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileStar tile={tile} boardId={boardId} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
               title="Are you sure you want to delete this content?"
