@@ -7,6 +7,9 @@
     "start": "next start -p $PORT",
     "heroku-postbuild": "npm run build"
   },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
     "antd": "^4.3.5",
