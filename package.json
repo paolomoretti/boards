@@ -4,11 +4,10 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build"
+    "start": "next start -p $PORT"
   },
   "engines": {
-    "node": ">= 8.0.0"
+    "node": "10.0.0"
   },
   "dependencies": {
     "@zeit/next-less": "^1.0.1",
