@@ -71,7 +71,8 @@ export default function BoardTileTagsSelector() {
       </Menu>
     )} trigger={['click']}>
       <Button>
-        Tags <DownOutlined />
+        <span className={'hide-mobile'}>Tags</span>
+        <DownOutlined />
       </Button>
     </Dropdown>
   );

@@ -16,7 +16,6 @@ export default function BoardTileApprovedSelector() {
   const approved: boolean | undefined = (tileParams.filters || []).indexOf('approved_only') > -1 ?
     true :
     (tileParams.filters || []).indexOf('unapproved_only') > -1 ? false : undefined;
-  console.log(`approved`, approved);
   const iconStyle: CSSProperties = {};
 
   switch (approved) {

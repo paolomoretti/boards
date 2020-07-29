@@ -20,6 +20,23 @@ const PageHeaderStyled = styled(PageHeader)`
   .ant-page-header-heading-title {
     line-height: 1em;
   }
+  .show-mobile {
+    display: none;
+  }
+  
+  @media only screen and (max-width: 500px) {
+    .ant-page-header-heading-extra {
+      white-space: normal;
+      text-align: right;
+      
+      > * {
+        margin: 0 0 5px 10px;
+      }
+      .show-mobile {
+        display: inherit;
+      }
+    }
+  }
 `;
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
@@ -72,7 +89,7 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
           placeholder={`Search on board ${board && board.name}`}
           onSearch={onSearchChanged}
         />,
-        <Button key={'add-button'} icon={<PlusOutlined />} onClick={addContent} type="primary">Add</Button>
+        <Button key={'add-button'} icon={<PlusOutlined />} onClick={addContent} type="primary"><span className={'hide-mobile'}>Add</span></Button>
       ]}
     />
   );

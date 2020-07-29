@@ -9,12 +9,13 @@ import { CSSProperties } from 'react';
 import { Colors } from '../../styles/vars';
 
 const Container = styled.div`
+  padding: 0 5px;
   margin: -4px 0;
   
   > * {
   display: inline-block;
     &:not(:last-of-type) {
-      margin-right: 1em;
+      margin-right: .1em;
     }
   }
 `;

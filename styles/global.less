@@ -9,3 +9,10 @@ body > div:first-of-type {
 .ant-dropdown-hidden {
   pointer-events: none;
 }
+.hide-mobile {
+  display: none;
+
+  @media only screen and (min-width: 500px) {
+    display: inherit;
+  }
+}

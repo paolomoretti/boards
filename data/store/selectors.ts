@@ -8,11 +8,6 @@ export const getBoards = createSelector([app], (app): Array<Board> | undefined =
 export const getBoardTileParams = createSelector([app], (app): GetBoardTilesParams => app.boardTilesParams);
 export const getCurrentBoard = createSelector([app], (app): Board | undefined => app.currentBoard);
 export const getCurrentBoardTiles = createSelector([app], (app): Array<BoardTile> => app.currentBoardTiles);
-export const getCurrentBoardTile = (state: { app: AppState }, tileId: number) =>
-  createSelector([app], (app): Array<BoardTile> => {
-    console.log(`selector`, tileId, state, app);
-    return app.currentBoardTiles;
-  })(state);
 export const getCurrentBoardItemsCount = createSelector([app], (app): number => app.currentBoardItemsCount);
 export const getUser = createSelector([app], (app): User | undefined => app.user);
 export const getToken = createSelector([app], (app): string | undefined => app.token);
