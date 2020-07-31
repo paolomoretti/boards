@@ -10,7 +10,7 @@ export interface Board {
 
 export interface BoardTile {
   approved: boolean;
-  // comment_count: 0
+  comment_count: number;
   loading?: boolean;
   created_at: number;
   // created_by_me: true
@@ -115,4 +115,28 @@ export interface GetBoardTilesParams {
   max_timestamp?: number;
   tags?: string;
   filters?: Array<string>;
+}
+
+export interface TileComment {
+  // comment_data: null
+  comment_id: number;
+  comment_thread_id: number;
+  created_at: number;
+  // link_id: 1825876063
+  position: number;
+  replies: Array<TileComment>;
+  // selection_html: null
+  text: string;
+  type: string; // "article"
+  user: TileCommentUser;
+}
+
+export interface TileCommentUser {
+  avatar: {
+    high: string;
+    medium: string;
+    small: string;
+  }
+  full_name: string;
+  id: number;
 }

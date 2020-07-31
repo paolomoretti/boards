@@ -10,4 +10,8 @@ export const ButtonHolder = styled.div`
       margin-left: 0;
     }
   }
-`
+`;
+
+export const AlignRight = styled.div`
+  text-align: right;
+`;

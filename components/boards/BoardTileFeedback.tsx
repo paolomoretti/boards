@@ -9,13 +9,19 @@ import { CSSProperties } from 'react';
 import { Colors } from '../../styles/vars';
 
 const Container = styled.div`
-  padding: 0 5px;
+  padding: 0 0 0 5px;
   margin: -4px 0;
+  white-space: nowrap;
   
   > * {
-  display: inline-block;
+    display: inline-block;
+    
     &:not(:last-of-type) {
-      margin-right: .1em;
+      margin-right: .4em;
+    }
+    span {
+      margin-right: -0.7em;
+      font-size: .9em;
     }
   }
 `;

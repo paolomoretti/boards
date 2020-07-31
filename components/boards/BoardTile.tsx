@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { Card } from 'antd';
+import ExtendedCard from '../shared/ExtendedCard';
 
-export const BoardTile = styled(Card)`
+export const BoardTile = styled(ExtendedCard)`
   min-width: 300px;
   width: 100%;
   border: 1px solid #dedede;

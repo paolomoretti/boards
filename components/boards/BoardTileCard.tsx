@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import * as _ from 'lodash';
-import { useEffect, useState } from 'react';
 import { Article, BoardTile, Note } from '../../types/boards.types';
 import styled from 'styled-components';
 import { message, Popconfirm } from 'antd';
@@ -19,6 +19,8 @@ import { updateCurrentBoardTile } from '../../data/store/actions';
 import { updateBoardTile } from '../../utils/fetchers/updateBoardTile';
 import { BoardTileStar } from './BoardTileStar';
 import { Colors } from '../../styles/vars';
+import { BoardTileCommentsCount } from './BoardTileCommentsCount';
+import { BoardTileComments } from './BoardTileComments';
 
 const TileContainer = styled.div`
   padding: 10px;
@@ -31,6 +33,32 @@ const TileContainer = styled.div`
       border-color: ${Colors.PRIMARY};
     }
   }
+  &.show-comments {
+    background-color: rgba(0, 0, 0, .1);
+  
+    &:before {
+      content: '';
+      background-color: rgba(0, 0, 0, .5);
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 499;
+    }
+    .ant-card {
+      position: fixed;
+      z-index: 500;
+      transition: all .3s ease-in-out;
+      max-height: calc(100% - 40px);
+      overflow-y: auto;
+      
+      .ant-card-body {
+        position: relative;
+        z-index: 10;
+      }
+    }
+  }
 `;
 const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
@@ -39,16 +67,21 @@ const ParagraphStyled = styled(Paragraph)`
 export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardTile; boardId: number; }) {
   const dispatch = useDispatch();
   const [deleted, setDeleted] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const tiles: BoardTile[] = useSelector(getCurrentBoardTiles);
   const tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
+  let $container: HTMLDivElement | null;
 
   const getClassNames = (tile: BoardTile): string => {
-    let classNames: Array<string> = [];
+    let classNames: Array<string> = ['board-tile-card'];
     if (tile.approved) {
       classNames.push('approved');
     }
     if (tile.loading) {
       classNames.push('is-loading');
+    }
+    if (showComments) {
+      classNames.push('show-comments');
     }
 
     return classNames.join(' ');
@@ -66,6 +99,43 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
     dispatch(updateCurrentBoardTile(updatedTile));
   };
 
+  const onClickContainer = (e: SyntheticEvent) => {
+    if (showComments) {
+      if (e.target === $container) {
+        popinComments();
+      }
+    }
+  }
+
+  const popoutComments = () => {
+    setShowComments(true);
+    $container!.style.height = `${$container!.offsetHeight}px`;
+    const $card: HTMLElement = $container!.firstElementChild! as HTMLElement;
+    $card.style.width = `${$card.offsetWidth}px`;
+    $card.style.top = `${$card.getBoundingClientRect().top}px`;
+
+    setTimeout(() => {
+      $card.style.top = `20px`;
+      $card.style.left = `${$card.offsetLeft -5}px`;
+      $card.style.width = `${$card.offsetWidth + 10}px`;
+    });
+  }
+
+  const popinComments = () => {
+    setShowComments(false);
+    const $card: HTMLElement = $container!.firstElementChild! as HTMLElement;
+    $container!.style = {};
+    $card.style = {};
+  }
+
+  const onCommentsVisibilityChange = () => {
+    if (!showComments) {
+      popoutComments();
+    } else {
+      popinComments();
+    }
+  };
+
   useEffect(() => {
     if (deleted) {
       deleteBoardTile(boardId, tile.id)
@@ -77,15 +147,21 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
     return null;
   }
 
+  const footer: ReactNode = showComments ? (
+    <BoardTileComments tile={tile} />
+  ) : null;
+
   return (
-    <TileContainer className={getClassNames(tile)}>
+    <TileContainer className={getClassNames(tile)} ref={el => $container = el} onClick={onClickContainer}>
       {tile.tile_type === 'link' && (
         <BoardTileArticle
           link={tile.link!.link}
           summary={tile.link!.user_summary}
           onChangeSummary={onChangeArticleSummary}
-          actions={[
+          footer={footer}
+          actions={!showComments && [
             <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
@@ -106,6 +182,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
           file={tile.file!}
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
             <EditOutlined />,
             <CloudDownloadOutlined />,
@@ -127,6 +204,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
         <BoardTileNote
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
+            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}

@@ -23,9 +23,10 @@ interface BoardTileArticleProps {
   summary?: string;
   onChangeSummary?(newSummary: string): void;
   children: ReactNode;
+  footer?: ReactNode;
 }
 
-export default function BoardTileArticle({ link, actions, summary, onChangeSummary, children }: BoardTileArticleProps) {
+export default function BoardTileArticle({ link, actions, summary, footer, onChangeSummary, children }: BoardTileArticleProps) {
   onChangeSummary = onChangeSummary || console.log;
   return (
     <BoardTile
@@ -37,6 +38,7 @@ export default function BoardTileArticle({ link, actions, summary, onChangeSumma
         /> : null
       }
       actions={actions}
+      footer={footer}
     >
       <Meta
         title={link.name}
