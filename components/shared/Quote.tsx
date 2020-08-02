@@ -1,8 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Paragraph, { ParagraphProps } from 'antd/lib/typography/Paragraph';
 import { Colors } from '../../styles/vars';
+import { Typography } from 'antd';
+import { ParagraphProps } from 'antd/lib/typography/Paragraph';
 
+const { Paragraph } = Typography;
 const QuoteStyle = styled(Paragraph)`
   word-break: break-word;
   white-space: pre-line;

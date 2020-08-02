@@ -1,6 +1,7 @@
 import * as React from "react";
-import Title from "antd/lib/typography/Title";
+import { Typography } from 'antd';
 
+const { Title } = Typography;
 export default function Logo(props?: HTMLElement) {
   const miniStyle = {
     color: '#333',

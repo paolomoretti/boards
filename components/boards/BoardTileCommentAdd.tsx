@@ -1,11 +1,10 @@
 import { Board, BoardTile, TileComment } from '../../types/boards.types';
 import styled from 'styled-components';
 import { SyntheticEvent, useState } from 'react';
-import { Avatar, Button, Comment, Form, message, Spin } from 'antd';
+import { Avatar, Button, Comment, Form, Input, message, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import { getCurrentBoard, getUser } from '../../data/store/selectors';
 import { User } from '../../types/app.types';
-import TextArea from 'antd/lib/input/TextArea';
 import { addBoardTileComment } from '../../utils/fetchers/addBoardTileComment';
 import { AlignRight } from '../../styles/helpers';
 import { addBoardTileCommentReply } from '../../utils/fetchers/addBoardTileCommentReply';
@@ -13,6 +12,7 @@ import { addBoardTileCommentReply } from '../../utils/fetchers/addBoardTileComme
 const Container = styled.div`
   margin: 1em 0 0;
 `;
+const { TextArea } = Input;
 
 interface BoardTileCommentAddProps {
   tile: BoardTile;

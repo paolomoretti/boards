@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Article } from '../../types/boards.types';
 import styled from 'styled-components';
 import { BoardItem } from './BoardItem';
-import { Col } from 'antd';
+import { Col, Typography } from 'antd';
 import { ImageCanvas } from '../shared/ImageCanvas';
-import Title from 'antd/lib/typography/Title';
 
+const { Title } = Typography;
 const ArticleUrl = styled.a`
   margin: -7px 0 0;
   display: block;

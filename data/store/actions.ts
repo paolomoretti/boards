@@ -8,6 +8,7 @@ export enum ActionTypes {
 
   // Boards
   // UNSHIFT_BOARD_TILE,
+  UPDATE_BOARD,
   UPDATE_BOARDS,
   UPDATE_CURRENT_BOARD_TILES,
   UPDATE_CURRENT_BOARD_TILE,
@@ -54,6 +55,11 @@ export const updateCurrentBoardTile = (tile: BoardTile) => ({
 export const updateCurrentBoardItemsCount = (count: number) => ({
   type: ActionTypes.UPDATE_CURRENT_BOARD_ITEMS_COUNT,
   payload: count
+});
+
+export const updateBoard = (board: Board) => ({
+  type: ActionTypes.UPDATE_BOARD,
+  payload: board
 });
 
 export const updateBoards = (boards: Array<Board>) => ({

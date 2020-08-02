@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Article } from '../../types/boards.types';
 import styled from 'styled-components';
-import Meta from 'antd/lib/card/Meta';
-import Paragraph from 'antd/lib/typography/Paragraph';
 import { BoardTile } from './BoardTile';
 import { ReactNode } from 'react';
 import { Image } from '../shared/Image';
 import { Quote } from '../shared/Quote';
+import { Card, Typography } from 'antd';
 
+const { Meta } = Card;
+const { Paragraph } = Typography;
 const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
 `;

@@ -1,8 +1,7 @@
-import { Button, Modal, PageHeader } from 'antd';
+import { Button, Modal, PageHeader, Input } from 'antd';
 import * as React from 'react';
 import { useRouter } from 'next/router';
 import styled, { CSSProperties } from 'styled-components';
-import Search from 'antd/lib/input/Search';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBoardContent, setBoardTilesParams, updateCurrentBoardTiles } from '../../data/store/actions';
@@ -14,6 +13,7 @@ import BoardTileTagsSelector from './BoardTileTagsSelector';
 import { BoardTitle } from './BoardTitle';
 import BoardTileApprovedSelector from './BoardTileApprovedSelector';
 
+const { Search } = Input;
 const PageHeaderStyled = styled(PageHeader)`
   box-shadow: 0px 10px 5px -7px #f0f2f5;
 

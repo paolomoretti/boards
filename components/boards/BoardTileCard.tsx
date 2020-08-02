@@ -3,8 +3,7 @@ import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import * as _ from 'lodash';
 import { Article, BoardTile, Note } from '../../types/boards.types';
 import styled from 'styled-components';
-import { message, Popconfirm } from 'antd';
-import Paragraph from 'antd/lib/typography/Paragraph';
+import { message, Popconfirm, Typography } from 'antd';
 import { CloudDownloadOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import BoardTileArticle from './BoardTileArticle';
 import BoardTileFile from './BoardTileFile';
@@ -22,6 +21,7 @@ import { Colors } from '../../styles/vars';
 import { BoardTileCommentsCount } from './BoardTileCommentsCount';
 import { BoardTileComments } from './BoardTileComments';
 
+const { Paragraph } = Typography;
 const TileContainer = styled.div`
   padding: 10px;
   
@@ -124,8 +124,8 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
   const popinComments = () => {
     setShowComments(false);
     const $card: HTMLElement = $container!.firstElementChild! as HTMLElement;
-    $container!.style = {};
-    $card.style = {};
+    $container!.setAttribute('style', '');
+    $card.setAttribute('style', '');
   }
 
   const onCommentsVisibilityChange = () => {

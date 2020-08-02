@@ -23,6 +23,11 @@ export default (state = initialState, action: Action) => {
     case ActionTypes.CLOSE_CURRENT_BOARD:
       return { ...state, currentBoardItemsCount: 0, currentBoardTiles: [] };
 
+    case ActionTypes.UPDATE_BOARD:
+      return { ...state, boards: [...(state.boards || []).map(board =>
+        board.id === action.payload.id ? action.payload : board
+      )]}
+
     case ActionTypes.UPDATE_BOARDS:
       const boards: Array<Board> = action.payload.sort((a: Board, b: Board) => b.last_activity_date - a.last_activity_date)
       return { ...state, boards: [...boards]}

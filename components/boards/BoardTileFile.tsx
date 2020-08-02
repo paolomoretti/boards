@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Numeral from 'numeral';
 import { File } from '../../types/boards.types';
-import Meta from 'antd/lib/card/Meta';
 import { BoardTile } from './BoardTile';
 import styled from 'styled-components';
-import Paragraph from 'antd/lib/typography/Paragraph';
 import { FileTypeIcon } from '../../styles/vars';
-import Text from 'antd/lib/typography/Text';
 import { ReactNode } from 'react';
+import { Card, Typography } from 'antd';
 
+const { Paragraph, Text } = Typography;
+const { Meta } = Card;
 const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
 `;
