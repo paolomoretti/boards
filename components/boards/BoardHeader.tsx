@@ -55,10 +55,10 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
 
   const addContent = () => {
     const modalClose = () => modal.destroy();
-    const onAdd = (content: string | BoardTile) => {
+    const onAdd = (content: string | BoardTile, tags?: Array<string>) => {
       if (typeof content === 'string') {
-        dispatch(addBoardContent({ text: content, boardId: board.id }));
-        addBoardTile({ text: content }, board.id)
+        dispatch(addBoardContent({ text: content, boardId: board.id, user_tags: tags || [] }));
+        addBoardTile({ text: content }, board.id, tags)
           .then(newTile => dispatch(updateCurrentBoardTiles([newTile, ...boardTiles])))
           .catch(console.error)
       } else {

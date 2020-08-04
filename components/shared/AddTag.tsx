@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 const TagInput = styled(AutoComplete)`
   width: auto;
+  display: inline-block !important;
+  min-width: 150px;
 `;
 interface AddTagProps {
   options?: Array<{ value: string; }>;
@@ -16,6 +18,11 @@ export default function AddTag({ onAddTag, options }: AddTagProps) {
 
   const onChange = (tag: string) => {
     setValue(tag);
+  }
+
+  const onBlur = () => {
+    setEdit(false);
+    setValue('');
   }
 
   const onSelect = (tag: string) => {
@@ -56,7 +63,7 @@ export default function AddTag({ onAddTag, options }: AddTagProps) {
         placeholder={'Type tag name'}
         size={'small'}
         defaultActiveFirstOption={true}
-        onBlur={() => setEdit(false)}
+        onBlur={onBlur}
       />
     )
   }

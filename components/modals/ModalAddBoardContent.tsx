@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import * as _ from 'lodash';
-import { Button, Form, Input, message, Row, Spin, Tag, Typography } from 'antd';
-import { PlusOutlined, TagsOutlined } from '@ant-design/icons';
+import { Button, Form, Input, message, Row, Spin, Tag } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { AlignCenter, ButtonHolder } from '../../styles/helpers';
 import { Store } from 'rc-field-form/lib/interface';
 import styled from 'styled-components';
@@ -16,13 +16,6 @@ import { BoardTile } from '../../types/boards.types';
 import { Constants } from '../../data/constants';
 
 const { TextArea } = Input;
-const { Paragraph } = Typography;
-const ExtrasParagraph = styled(Paragraph)`
-  padding: 3px 0 0;
-  a {
-    margin-left: .7em;
-  }
-`;
 const ContentTypeSelector = styled(Row)`
   margin-bottom: 20px;
 `;
@@ -57,37 +50,55 @@ interface ModalAddBoardContentProps {
   boardId: number;
   boardTags?: Array<string>;
   onClose(): void;
-  onAdd?(content: string | BoardTile): void;
+  onAdd?(content: string | BoardTile, tags?: Array<string>): void;
   onUploaded?(tile: BoardTile): void;
 }
 
-const UploadTextForm = ({ onAdd, onClose }: ModalAddBoardContentProps) => {
-  // const [tags, setTags] = useState([]);
+const UploadTextForm = ({ onAdd, onClose, boardTags }: ModalAddBoardContentProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
+  const [tags, setTags] = useState<Array<string>>([]);
 
+  const onAddTag = (tag: string) => {
+    setTags(_.uniq([tag, ...tags]));
+  }
+  const removeTag = (tag: string) => {
+    setTags(_.without(tags, tag));
+  }
   const onAddContent = (values: Store) => {
+    setLoading(true);
     if (values.content && values.content !== '') {
-      onAdd!(values.content);
+      onAdd!(values.content, tags);
     } else {
       message.error('Content is mandatory');
     }
   }
+  const onPressEnter = (e: SyntheticEvent) => {
+    // @ts-ignore
+    if (e.ctrlKey && value.length > 0) {
+      onAddContent({ content: value });
+    }
+  }
 
   return (
-    <Form onFinish={onAddContent}>
-      <Form.Item name="content" style={{margin: 0}}>
-        <TextArea autoSize={{ minRows: 3, maxRows: 8 }} autoFocus={true} />
-      </Form.Item>
-      <ExtrasParagraph style={{textAlign: 'right', marginTop: 0}}>
-        <a>
-          <TagsOutlined /> Add tags
-        </a>
-      </ExtrasParagraph>
+    <Spin spinning={loading}>
+      <Form onFinish={onAddContent}>
+        <Form.Item name="content" style={{margin: 0}}>
+          <TextArea onPressEnter={onPressEnter} value={value} onChange={(e) => setValue(e.target.value)} autoSize={{ minRows: 3, maxRows: 8 }} autoFocus={true} />
+        </Form.Item>
+        <Form.Item name="tags">
+          {tags.map(tag => (
+            <ClickableTag closable={true} onClose={() => removeTag(tag)} key={tag}>{tag}</ClickableTag>
+          ))}
+          <AddTag onAddTag={onAddTag} options={(boardTags || []).map(t => ({ value: t}))} />
+        </Form.Item>
 
-      <ButtonHolder>
-        <Button type={'dashed'} onClick={onClose}>Cancel</Button>
-        <Button type={'primary'} htmlType="submit">Add</Button>
-      </ButtonHolder>
-    </Form>
+        <ButtonHolder>
+          <Button type={'dashed'} onClick={onClose}>Cancel</Button>
+          <Button type={'primary'} htmlType="submit">Add</Button>
+        </ButtonHolder>
+      </Form>
+    </Spin>
   );
 }
 const UploadFileForm = ({ boardId, onUploaded, onClose, boardTags }: ModalAddBoardContentProps) => {

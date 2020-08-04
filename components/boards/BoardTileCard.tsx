@@ -63,6 +63,7 @@ const TileContainer = styled.div`
 `;
 const ParagraphStyled = styled(Paragraph)`
   word-break: break-word;
+  white-space: pre-line;
 `;
 
 export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardTile; boardId: number; }) {

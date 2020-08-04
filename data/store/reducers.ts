@@ -38,6 +38,7 @@ export default (state = initialState, action: Action) => {
         note: {
           note: action.payload.text
         },
+        user_tags: action.payload.user_tags || [],
         loading: true
       }
       return { ...state, currentBoardTiles: [tileMock, ...state.currentBoardTiles!]};

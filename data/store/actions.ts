@@ -76,7 +76,7 @@ export const closeCurrentBoard = () => ({
   type: ActionTypes.CLOSE_CURRENT_BOARD
 });
 
-export const addBoardContent = (content: { text: string; boardId: number; }) => ({
+export const addBoardContent = (content: { text: string; boardId: number; user_tags?: Array<string> }) => ({
   type: ActionTypes.ADD_BOARD_CONTENT,
   payload: content
 });
