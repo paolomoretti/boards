@@ -13,6 +13,7 @@ const BoardTileNoteContainer = styled(BoardTile)`
 `
 interface BoardTileNoteProps {
   actions: any;
+  footer?: ReactNode;
   children: ReactNode;
 }
 

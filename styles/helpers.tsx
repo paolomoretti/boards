@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ButtonHolder = styled.div`
   text-align: right;
+  margin-top: 20px;
   
   > * {
     margin-left: 10px;
@@ -14,4 +15,8 @@ export const ButtonHolder = styled.div`
 
 export const AlignRight = styled.div`
   text-align: right;
+`;
+
+export const AlignCenter = styled.div`
+  text-align: center;
 `;

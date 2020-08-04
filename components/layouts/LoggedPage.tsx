@@ -50,10 +50,10 @@ export default function LoggedPage({ children }: { children: ReactNode; }) {
   });
 
   return (
-    <Layout style={{ width: '100%', height: '100vh' }}>
+    <Layout style={{ width: '100%', minHeight: '100vh' }}>
       <Spin spinning={!ready}>
         <AppHeader />
-        <Content style={{height: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
+        <Content style={{minHeight: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
           {ready && children}
         </Content>
       </Spin>

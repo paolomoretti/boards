@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { Article, BoardTile, Note } from '../../types/boards.types';
 import styled from 'styled-components';
 import { message, Popconfirm, Typography } from 'antd';
-import { CloudDownloadOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined } from '@ant-design/icons';
 import BoardTileArticle from './BoardTileArticle';
 import BoardTileFile from './BoardTileFile';
 import BoardTileExtraContent from './BoardTileExtraContent';
@@ -20,6 +20,7 @@ import { BoardTileStar } from './BoardTileStar';
 import { Colors } from '../../styles/vars';
 import { BoardTileCommentsCount } from './BoardTileCommentsCount';
 import { BoardTileComments } from './BoardTileComments';
+import { BoardTileFileDownload } from './BoardTileFileDownload';
 
 const { Paragraph } = Typography;
 const TileContainer = styled.div`
@@ -180,19 +181,22 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
       {tile.tile_type === 'file' && (
         <BoardTileFile
           file={tile.file!}
+          boardId={boardId}
+          tileId={tile.id}
+          footer={footer}
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
             <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
-            <EditOutlined />,
-            <CloudDownloadOutlined />,
+            // <EditOutlined />,
+            <BoardTileFileDownload boardId={boardId} tile={tile} />,
             <Popconfirm
               onConfirm={() => setDeleted(true)}
               title="Are you sure you want to delete this content?"
               placement={'top'}
               icon={<DeleteOutlined style={{ color: 'red' }}/>}
             >
-              <DeleteOutlined onClick={() => alert('download')} />
+              <DeleteOutlined />
             </Popconfirm>
           ]}
         >
@@ -202,6 +206,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
 
       {tile.tile_type === 'note' && (
         <BoardTileNote
+          footer={footer}
           actions={[
             <BoardTileFeedback tile={tile} boardId={boardId} />,
             <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,

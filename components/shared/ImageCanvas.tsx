@@ -11,10 +11,14 @@ const Canvas = styled.div`
 
 interface ImageCanvasProps {
   src: string;
+  width?: number;
+  height?: number;
 }
-export const ImageCanvas = ({ src }: ImageCanvasProps) => {
+export const ImageCanvas = ({ src, width, height }: ImageCanvasProps) => {
   const canvasStyle = {
-    backgroundImage: `url(${src})`
+    backgroundImage: `url(${src})`,
+    width: width || '100%',
+    height: height || '100%'
   }
   return (
     <Canvas style={canvasStyle} />

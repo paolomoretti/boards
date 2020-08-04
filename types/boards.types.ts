@@ -140,3 +140,5 @@ export interface TileCommentUser {
   full_name: string;
   id: number;
 }
+
+export type FileType = 'image' | 'pdf' | 'xls' | 'doc' | 'ppt' | 'video' | 'zip' | 'unknown';

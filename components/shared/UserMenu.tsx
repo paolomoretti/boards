@@ -2,6 +2,7 @@ import { Avatar, Dropdown, Menu } from 'antd';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { User } from '../../types/app.types';
+import { doLogout } from '../../data/store/actions';
 
 export default function UserMenu({ user }: { user: User; }) {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ export default function UserMenu({ user }: { user: User; }) {
     return null;
   }
 
-  const doLogout = () => {
+  const signOut = () => {
     dispatch(doLogout());
     router.push(`/login`);
   }
@@ -24,19 +25,17 @@ export default function UserMenu({ user }: { user: User; }) {
         <a href="http://www.taobao.com/">2nd menu item</a>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={doLogout}>Logout</Menu.Item>
+      <Menu.Item key="3" onClick={signOut}>Logout</Menu.Item>
     </Menu>
   );
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      {/*<Badge dot>*/}
-        {user && user.avatar ? (
-          <Avatar shape="square" src={user.avatar.small} />
-        ) : (
-          <Avatar shape="square">{user.full_name[0].toUpperCase()}</Avatar>
-        )}
-      {/*</Badge>*/}
+      {user && user.avatar ? (
+        <Avatar shape="square" src={user.avatar.small} />
+      ) : (
+        <Avatar shape="square">{user.full_name[0].toUpperCase()}</Avatar>
+      )}
     </Dropdown>
   )
 }

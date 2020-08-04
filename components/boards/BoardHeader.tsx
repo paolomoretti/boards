@@ -55,11 +55,16 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
 
   const addContent = () => {
     const modalClose = () => modal.destroy();
-    const onAdd = (text: string) => {
-      dispatch(addBoardContent({ text, boardId: board.id }));
-      addBoardTile({ text }, board.id)
-        .then(newTile => dispatch(updateCurrentBoardTiles([newTile, ...boardTiles])))
-        .catch(console.error)
+    const onAdd = (content: string | BoardTile) => {
+      if (typeof content === 'string') {
+        dispatch(addBoardContent({ text: content, boardId: board.id }));
+        addBoardTile({ text: content }, board.id)
+          .then(newTile => dispatch(updateCurrentBoardTiles([newTile, ...boardTiles])))
+          .catch(console.error)
+      } else {
+        // File upload, we have the tile already
+        dispatch(updateCurrentBoardTiles([content, ...boardTiles]))
+      }
       modalClose();
     }
     const modal = Modal.info({

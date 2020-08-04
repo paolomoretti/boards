@@ -5,17 +5,20 @@ export default (req, res) => {
   req.url = req.url.replace(`/api/`, `https://api.cronycle.com/`);
   const fetchOptions = {
     method: req.method,
-    headers: { 'content-type': req.headers['content-type'] }
+    headers: {}
   };
   if (req.headers['authorization']) {
     fetchOptions.headers.authorization = req.headers['authorization'];
+  }
+  if (req.headers['content-type']) {
+    fetchOptions.headers['content-type'] = req.headers['content-type'];
   }
   if (req.body && req.method.toUpperCase() !== 'GET') {
     fetchOptions.body = JSON.stringify(req.body);
   }
   console.log(`[slugs]`, slugs);
   // console.log(`[fetch] ${req.url}`, fetchOptions);
-  fetch(req.url, fetchOptions)
+  return fetch(req.url, fetchOptions)
     .then((data) => data.json())
     .then((data) => {
       try {

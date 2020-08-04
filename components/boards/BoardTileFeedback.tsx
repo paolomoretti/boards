@@ -17,11 +17,15 @@ const Container = styled.div`
     display: inline-block;
     
     &:not(:last-of-type) {
-      margin-right: .4em;
+      margin-right: .2em;
     }
     span {
       margin-right: -0.7em;
       font-size: .9em;
+    }
+    .count {
+      font-size: 10px;
+      margin: -4px -12px 0 0;
     }
   }
 `;
@@ -64,11 +68,11 @@ export const BoardTileFeedback = ({ tile, boardId }: { tile: BoardTile; boardId:
   return (
     <Container>
       <div>
-        <span>{upvotes}</span>
+        <span className={'count'}>{upvotes}</span>
         <Button type="text" icon={<LikeOutlined style={upvoteStyle} />} onClick={() => vote(upvoted ? 0 : 1)} />
       </div>
       <div>
-        <span>{downvotes}</span>
+        <span className={'count'}>{downvotes}</span>
         <Button type="text" icon={<DislikeOutlined style={downvoteStyle} onClick={() => vote(downvoted ? 0 : -1)} />} />
       </div>
     </Container>
