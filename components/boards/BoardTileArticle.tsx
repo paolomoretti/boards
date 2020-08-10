@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Article } from '../../types/boards.types';
+import { Article, Highlight } from '../../types/boards.types';
 import styled from 'styled-components';
 import { BoardTile } from './BoardTile';
 import { ReactNode } from 'react';
 import { Image } from '../shared/Image';
 import { Quote } from '../shared/Quote';
 import { Card, Typography } from 'antd';
+import { HighlightText } from '../shared/Highlight';
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -25,10 +26,18 @@ interface BoardTileArticleProps {
   onChangeSummary?(newSummary: string): void;
   children: ReactNode;
   footer?: ReactNode;
+  highlights?: Highlight;
 }
 
-export default function BoardTileArticle({ link, actions, summary, footer, onChangeSummary, children }: BoardTileArticleProps) {
+export default function BoardTileArticle({ link, highlights, actions, summary, footer, onChangeSummary, children }: BoardTileArticleProps) {
   onChangeSummary = onChangeSummary || console.log;
+
+  if (highlights) {
+    Object.keys(highlights).forEach((item: any) =>
+      // @ts-ignore
+      link[item] = <HighlightText text={typeof highlights[item] === 'string' ? highlights[item] : highlights[item].join('')} />
+    );
+  }
   return (
     <BoardTile
       size={'small'}

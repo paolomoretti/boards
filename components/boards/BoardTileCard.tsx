@@ -21,6 +21,7 @@ import { Colors } from '../../styles/vars';
 import { BoardTileCommentsCount } from './BoardTileCommentsCount';
 import { BoardTileComments } from './BoardTileComments';
 import { BoardTileFileDownload } from './BoardTileFileDownload';
+import { parseTileHighlights } from '../../utils/parsers/parseTileHighlights';
 
 const { Paragraph } = Typography;
 const TileContainer = styled.div`
@@ -66,12 +67,20 @@ const ParagraphStyled = styled(Paragraph)`
   white-space: pre-line;
 `;
 
-export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardTile; boardId: number; }) {
+interface BoardTileCardProps {
+  tile: BoardTile;
+  boardId: number;
+  actions?: boolean;
+}
+export default function BoardTileCard({ tile: tileRef, boardId, actions }: BoardTileCardProps) {
   const dispatch = useDispatch();
   const [deleted, setDeleted] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const tiles: BoardTile[] = useSelector(getCurrentBoardTiles);
-  const tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
+  let tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
+  if (!tile) {
+    tile = tileRef;
+  }
   let $container: HTMLDivElement | null;
 
   const getClassNames = (tile: BoardTile): string => {
@@ -149,6 +158,8 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
     return null;
   }
 
+  tile = parseTileHighlights(tile);
+
   const footer: ReactNode = showComments ? (
     <BoardTileComments tile={tile} />
   ) : null;
@@ -161,7 +172,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
           summary={tile.link!.user_summary}
           onChangeSummary={onChangeArticleSummary}
           footer={footer}
-          actions={!showComments && [
+          actions={!showComments && actions !== false && [
             <BoardTileFeedback tile={tile} boardId={boardId} />,
             <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
@@ -185,7 +196,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
           boardId={boardId}
           tileId={tile.id}
           footer={footer}
-          actions={[
+          actions={actions !== false && [
             <BoardTileFeedback tile={tile} boardId={boardId} />,
             <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,
@@ -208,7 +219,7 @@ export default function BoardTileCard({ tile: tileRef, boardId }: { tile: BoardT
       {tile.tile_type === 'note' && (
         <BoardTileNote
           footer={footer}
-          actions={[
+          actions={actions !== false && [
             <BoardTileFeedback tile={tile} boardId={boardId} />,
             <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
             <BoardTileStar tile={tile} boardId={boardId} />,

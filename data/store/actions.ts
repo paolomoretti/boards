@@ -5,6 +5,7 @@ export enum ActionTypes {
   // App / generic
   SET_TOKEN,
   SHOW_MODAL,
+  SET_APP_SEARCH,
 
   // Boards
   // UNSHIFT_BOARD_TILE,
@@ -89,6 +90,11 @@ export const setToken = (token: string | undefined) => ({
 export const showModal = (modal: ModalType, params: Record<string, any> = {}) => ({
   type: ActionTypes.SHOW_MODAL,
   payload: { modal, params }
+});
+
+export const updateAppSearch = (keyword: string) => ({
+  type: ActionTypes.SET_APP_SEARCH,
+  payload: keyword
 });
 
 // User

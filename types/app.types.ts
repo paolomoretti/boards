@@ -1,7 +1,9 @@
 import { ModalProps } from 'antd/lib/modal';
-import { Board, BoardTile, GetBoardTilesParams } from './boards.types';
+import { Board, BoardSearchResult, BoardTile, GetBoardTilesParams } from './boards.types';
 
 export interface AppState {
+  searchKeyword: string;
+  searchFetcher(keyword: string): Promise<{ results: Array<BoardSearchResult>; total_count: number; }>;
   guest?: boolean;
   token?: string;
   user?: User;

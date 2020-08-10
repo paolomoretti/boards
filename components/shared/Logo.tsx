@@ -8,6 +8,6 @@ export default function Logo(props?: HTMLElement) {
     fontSize: '.55em'
   }
   return (
-    <Title {...props} level={4} style={{margin: 0, display: 'inline-block'}}>Cronycle <small style={miniStyle}>mini</small></Title>
+    <Title {...props} level={4} style={{margin: 0, display: 'inline-block'}}>Cr<span className={'hide-mobile'}>onycle</span> <small style={miniStyle}>mini</small></Title>
   )
 }

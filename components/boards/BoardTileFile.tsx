@@ -47,7 +47,8 @@ export default function BoardTileFile({ file, footer, actions, tileId, boardId, 
       getBoardFileDownloadUrl(boardId, tileId)
         .then(res => setProtectedUrl(res.url));
     }
-  })
+  });
+
   const getFilePreview = (file: File): ReactNode => {
     if (file.content_type.indexOf('image') === 0) {
       return (

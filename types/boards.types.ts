@@ -1,3 +1,6 @@
+import { User } from './app.types';
+import { ReactNode } from 'react';
+
 export interface Board {
   id: number;
   avatar?: string;
@@ -35,13 +38,26 @@ export interface BoardTile {
   // link: {id: 5919179, created_at: 1593302249, comment_count: 0, user_summary: "",…}
   // read_count: 0
   file?: File;
-  tile_type: "link" | "note" | "file";
+  tile_type: TileType;
   // updated_at: 1593302249
   upvoted: boolean;
   upvotes: 0;
   // user: {id: 924, full_name: "Paolo Moretti", image_url: null, username: "little_brown", avatar: {,…},…}
   user_tags: Array<string>;
+  highlights?: Highlight
 }
+
+export type HighlightArticleKey = 'content' | 'description' | 'plain_text' | 'name' | 'user_summary';
+export type HighlightFileKey = 'name' | 'summary';
+export type HighlightNoteKey = 'content';
+export type Highlight = Record<HighlightArticleKey & HighlightFileKey, Array<string> | string>;
+// export interface Highlight {
+//   content: string;
+//   description: Array<string>;
+//   plain_text: Array<string>;
+//   name: string;
+//   user_summary: Array<string>;
+// }
 
 export interface Article {
   // assets: [{id: 783241742, media_type: "image",…}, {id: 783242348, media_type: "image",…}]
@@ -83,7 +99,7 @@ export interface File {
   id: number;
   original_filename: string;
   summary: string;
-  title: string;
+  title: string | ReactNode;
   // updated_at: 1576150427
 }
 
@@ -141,4 +157,32 @@ export interface TileCommentUser {
   id: number;
 }
 
+export type TileType = "link" | "note" | "file";
 export type FileType = 'image' | 'pdf' | 'xls' | 'doc' | 'ppt' | 'video' | 'zip' | 'unknown';
+
+export interface BoardSearchResult {
+  approved: false;
+  // comment_count: 1
+  created_at: number;
+  // created_by_me: true
+  // downvoted: false
+  // downvotes: 0
+  // engagement: 1
+  // grouped_on_tile_id: null
+  highlights: {
+    plain_text: Array<string>;
+    description: Array<string>;
+    content: string;
+  }
+  id: number;
+  // is_new: false
+  link?: BoardTile;
+  // read_count: 0
+  tile_type: TileType
+  topic_board: Board;
+  // updated_at: 1596156946
+  // upvoted: false
+  // upvotes: 0
+  user: User;
+  user_tags?: Array<string>;
+}

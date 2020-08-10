@@ -11,3 +11,4 @@ export const getCurrentBoardTiles = createSelector([app], (app): Array<BoardTile
 export const getCurrentBoardItemsCount = createSelector([app], (app): number => app.currentBoardItemsCount);
 export const getUser = createSelector([app], (app): User | undefined => app.user);
 export const getToken = createSelector([app], (app): string | undefined => app.token);
+export const getSearchFetcher = createSelector([app], (app): Function => app.searchFetcher);

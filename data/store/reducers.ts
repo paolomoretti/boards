@@ -2,6 +2,7 @@ import { AppState } from '../../types/app.types';
 import { Action, ActionTypes } from './actions';
 import getToken from '../../utils/data/getToken';
 import { Board, BoardTile } from '../../types/boards.types';
+import { appSearchDefault } from '../../utils/fetchers/appSearchDefault';
 
 export const initialState = Object.freeze<AppState>({
   boardTilesParams: {
@@ -15,7 +16,10 @@ export const initialState = Object.freeze<AppState>({
   },
   token: getToken(),
   currentBoardTiles: [],
-  currentBoardItemsCount: 0
+  currentBoardItemsCount: 0,
+
+  searchKeyword: '',
+  searchFetcher: appSearchDefault
 });
 
 export default (state = initialState, action: Action) => {
