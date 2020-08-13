@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { Button, Card, Form, Input, Layout, message, PageHeader, Spin } from 'antd';
-import { useRouter } from 'next/router';
+import {useState} from 'react';
+import {Button, Card, Form, Input, Layout, message, Spin} from 'antd';
+import {useRouter} from 'next/router';
 import * as Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import { setToken, setUser } from '../data/store/actions';
-import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
+import {useDispatch} from 'react-redux';
+import {setToken, setUser} from '../data/store/actions';
+import {ValidateErrorEntity} from 'rc-field-form/lib/interface';
 import styled from 'styled-components';
 import GuestPage from '../components/layouts/GuestPage';
 
