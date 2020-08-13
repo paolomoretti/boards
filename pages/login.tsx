@@ -63,11 +63,7 @@ export default function Login() {
 
   return (
     <GuestPage>
-      <PageHeader
-        // onBack={() => null}
-        title="Boards"
-      />
-      <Content style={{padding: '0 20px 20px'}}>
+      <Content style={{padding: '20px'}}>
         <LoginCard title={'Sign in'}>
           <Spin spinning={loading}>
             <Form

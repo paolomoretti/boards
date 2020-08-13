@@ -19,9 +19,13 @@ const HeaderRow = styled(Row)`
   > * {
     padding: 0 20px;
   }
-`
+`;
 
-export default function AppHeader() {
+interface AppHeaderProps {
+  guest?: boolean;
+}
+
+export default function AppHeader({ guest }: AppHeaderProps) {
   const user: User = useSelector(getUser)!;
 
   return (
@@ -34,12 +38,14 @@ export default function AppHeader() {
             </span>
           </Link>
         </Col>
-        <Col flex={100} style={{padding: 0}}>
-          <AppSearch />
-        </Col>
-        <Col flex={1}>
-          {user && <UserMenu user={user} />}
-        </Col>
+        {!guest && [
+          <Col flex={100} style={{padding: 0}}>
+            <AppSearch />
+          </Col>,
+          <Col flex={1}>
+            {user && <UserMenu user={user} />}
+          </Col>
+        ]}
       </HeaderRow>
     </Affix>
   )
