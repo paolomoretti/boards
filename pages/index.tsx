@@ -1,19 +1,18 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import LoggedPage from '../components/layouts/LoggedPage';
-import { Affix, message, Spin } from 'antd';
-import { getBoards } from '../utils/fetchers/getBoards';
+import {Affix, message, Spin} from 'antd';
+import {getBoards} from '../utils/fetchers/getBoards';
 import BoardCard from '../components/boards/BoardCard';
-import { Board } from '../types/boards.types';
+import {Board} from '../types/boards.types';
 import AddBoardButton from '../components/boards/AddBoardButton';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Masonry from 'react-masonry-css';
-import { cardColBreakpoints, Size } from '../styles/vars';
-import { useDispatch, useSelector } from 'react-redux';
-import { getBoards as getBoardsList } from '../data/store/selectors';
-import { updateBoards } from '../data/store/actions';
+import {cardColBreakpoints, Size} from '../styles/vars';
+import {useDispatch, useSelector} from 'react-redux';
+import {getBoards as getBoardsList} from '../data/store/selectors';
+import {updateBoards} from '../data/store/actions';
 
 const MasonryContainer = styled(Masonry)`
   display: flex;
@@ -37,7 +36,6 @@ const BoardsContainer = styled.div`
 `;
 
 export default function Home() {
-  const router = useRouter();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const boards = useSelector(getBoardsList);
@@ -57,10 +55,6 @@ export default function Home() {
     }
   });
 
-  const navigateToBoard = (boardId: number) => {
-    router.push(`/boards/[id]`, `/boards/${boardId}`);
-  };
-
   return (
     <LoggedPage>
       <Spin spinning={!boards}>
@@ -68,7 +62,7 @@ export default function Home() {
           {boards && Array.isArray(boards) ? (
             <BoardsContainer>
               <Affix offsetTop={Size.HEADER_HEIGHT} style={{ zIndex: 900 }}>
-                <AddBoardButton boards={boards} onSelect={navigateToBoard}/>
+                <AddBoardButton />
               </Affix>
               <MasonryContainer
                 breakpointCols={cardColBreakpoints}
