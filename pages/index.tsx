@@ -6,7 +6,7 @@ import { Affix, message, Spin } from 'antd';
 import { getBoards } from '../utils/fetchers/getBoards';
 import BoardCard from '../components/boards/BoardCard';
 import { Board } from '../types/boards.types';
-import BoardsHeader from '../components/boards/BoardsHeader';
+import AddBoardButton from '../components/boards/AddBoardButton';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Masonry from 'react-masonry-css';
@@ -27,7 +27,7 @@ const MasonryContainer = styled(Masonry)`
   .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
     margin-bottom: 20px;
   }
-`
+`;
 const BoardsContainer = styled.div`
   padding: 0 20px 20px;
   
@@ -59,7 +59,7 @@ export default function Home() {
 
   const navigateToBoard = (boardId: number) => {
     router.push(`/boards/[id]`, `/boards/${boardId}`);
-  }
+  };
 
   return (
     <LoggedPage>
@@ -68,7 +68,7 @@ export default function Home() {
           {boards && Array.isArray(boards) ? (
             <BoardsContainer>
               <Affix offsetTop={Size.HEADER_HEIGHT} style={{ zIndex: 900 }}>
-                <BoardsHeader boards={boards} onSelect={navigateToBoard}/>
+                <AddBoardButton boards={boards} onSelect={navigateToBoard}/>
               </Affix>
               <MasonryContainer
                 breakpointCols={cardColBreakpoints}
