@@ -1,8 +1,7 @@
-import { Button, Modal, PageHeader, Input } from 'antd';
+import { Button, Input, Modal, PageHeader } from 'antd';
 import * as React from 'react';
 import { useRouter } from 'next/router';
 import styled, { CSSProperties } from 'styled-components';
-import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBoardContent, setBoardTilesParams, updateCurrentBoardTiles } from '../../data/store/actions';
 import { ModalAddBoardContent } from '../modals/ModalAddBoardContent';
@@ -12,10 +11,20 @@ import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types'
 import BoardTileTagsSelector from './BoardTileTagsSelector';
 import { BoardTitle } from './BoardTitle';
 import BoardTileApprovedSelector from './BoardTileApprovedSelector';
+import { Shadows, Size } from '../../styles/vars';
+import AddBoardContentButton from './AddBoardContentButton';
+import { SyntheticEvent, useState } from 'react';
+import { isMobile } from '../../utils/isMobile';
+import { FilterOutlined, CloseOutlined } from '@ant-design/icons';
 
 const { Search } = Input;
+const Container = styled.div`
+  background-color: white;
+`;
 const PageHeaderStyled = styled(PageHeader)`
-  box-shadow: 0px 10px 5px -7px #f0f2f5;
+  box-shadow: ${Shadows.HEADER};
+  max-width: ${Size.MAX_APP_WIDTH + 40}px;
+  margin: 0 auto;
 
   .ant-page-header-heading-title {
     line-height: 1em;
@@ -26,8 +35,8 @@ const PageHeaderStyled = styled(PageHeader)`
   
   @media only screen and (max-width: 500px) {
     .ant-page-header-heading-extra {
-      white-space: normal;
       text-align: right;
+      margin: 7px -15px 0;
       
       > * {
         margin: 0 0 5px 10px;
@@ -40,6 +49,7 @@ const PageHeaderStyled = styled(PageHeader)`
 `;
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
+  const [showMobile, setShowMobile] = useState<boolean>(false);
   if (!board) {
     return null;
   }
@@ -80,22 +90,36 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
     dispatch(setBoardTilesParams(newParams));
   }
 
+  const onHeaderClick = (e: SyntheticEvent) => {
+    if (e.target && (e.target as HTMLDivElement).className === 'ant-page-header-heading') {
+      window.scrollTo({ top: 0, behavior: 'smooth'})
+    }
+  }
+
+  const Filters = isMobile() && !showMobile ?
+    [
+      <Button icon={<FilterOutlined />} shape={'circle'} onClick={() => setShowMobile(true)} />
+    ] : [
+      <BoardTileTagsSelector key={'tags'} />,
+      <BoardTileApprovedSelector />,
+      <Search
+        style={{maxWidth: 200}}
+        key={'search'}
+        placeholder={`Search on board ${board && board.name}`}
+        onSearch={onSearchChanged}
+      />,
+      isMobile() && <Button icon={<CloseOutlined />} type={'text'} onClick={() => setShowMobile(false)} />
+    ];
+
   return (
-    <PageHeaderStyled
-      title={<BoardTitle board={board} />}
-      onBack={() => router.push(`/`, '/', { shallow: true })}
-      style={pageHeaderStyle}
-      extra={[
-        <BoardTileTagsSelector key={'tags'} />,
-        <BoardTileApprovedSelector />,
-        <Search
-          style={{maxWidth: 200}}
-          key={'search'}
-          placeholder={`Search on board ${board && board.name}`}
-          onSearch={onSearchChanged}
-        />,
-        <Button key={'add-button'} icon={<PlusOutlined />} onClick={addContent} type="primary"><span className={'hide-mobile'}>Add</span></Button>
-      ]}
-    />
+    <Container onClick={onHeaderClick}>
+      <PageHeaderStyled
+        title={<BoardTitle board={board} />}
+        onBack={() => router.push(`/`, '/', { shallow: true })}
+        style={pageHeaderStyle}
+        extra={Filters}
+      />
+      <AddBoardContentButton addContent={addContent} />
+    </Container>
   );
 };

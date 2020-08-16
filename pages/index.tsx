@@ -1,37 +1,41 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LoggedPage from '../components/layouts/LoggedPage';
-import {Affix, message, Spin} from 'antd';
-import {getBoards} from '../utils/fetchers/getBoards';
+import { message, Spin } from 'antd';
+import { getBoards } from '../utils/fetchers/getBoards';
 import BoardCard from '../components/boards/BoardCard';
-import {Board} from '../types/boards.types';
+import { Board } from '../types/boards.types';
 import AddBoardButton from '../components/boards/AddBoardButton';
 import Link from 'next/link';
-import Masonry from 'react-masonry-css';
-import {cardColBreakpoints, Size} from '../styles/vars';
-import {useDispatch, useSelector} from 'react-redux';
-import {getBoards as getBoardsList} from '../data/store/selectors';
-import {updateBoards} from '../data/store/actions';
+import { Size } from '../styles/vars';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBoards as getBoardsList } from '../data/store/selectors';
+import { updateBoards } from '../data/store/actions';
 
-const MasonryContainer = styled(Masonry)`
-  display: flex;
-  width: auto;
-  margin-left: -20px;
-    
-  .my-masonry-grid_column {
-    background-clip: padding-box;
-    padding-left: 20px;
-  }
-  .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
-    margin-bottom: 20px;
-  }
-`;
+const Content = styled.div`
+  max-width: ${Size.MAX_APP_WIDTH + 40}px;
+  height: calc(100vh - ${Size.HEADER_HEIGHT}px);
+  margin: 0 auto;
+`
 const BoardsContainer = styled.div`
-  padding: 0 20px 20px;
+  padding: 20px 10px;
   
-  > * {
-    margin-bottom: 10px;
+  .board-card-item {
+    width: 100%;
+    display: inline-block;
+    padding: 0 10px 20px;
+    box-sizing: border-box;
+    
+    @media only screen and (min-width: 650px) {
+      width: 50%;
+    }
+    @media only screen and (min-width: 950px) {
+      width: 33.3%;
+    }
+    @media only screen and (min-width: 1250px) {
+      width: 25%;
+    }
   }
 `;
 
@@ -58,28 +62,20 @@ export default function Home() {
   return (
     <LoggedPage>
       <Spin spinning={!boards}>
-        <div style={{height: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
+        <Content>
           {boards && Array.isArray(boards) ? (
             <BoardsContainer>
-              <Affix offsetTop={Size.HEADER_HEIGHT} style={{ zIndex: 900 }}>
-                <AddBoardButton />
-              </Affix>
-              <MasonryContainer
-                breakpointCols={cardColBreakpoints}
-                className="my-masonry-grid"
-                columnClassName="my-masonry-grid_column"
-              >
+              <AddBoardButton />
                 {boards.map((board: Board) =>
                   <Link key={board.id} href={'/boards/[id]'} as={`/boards/${board.id}`}>
-                    <div>
+                    <div className={'board-card-item'}>
                       <BoardCard board={board}/>
                     </div>
                   </Link>
                 )}
-              </MasonryContainer>
             </BoardsContainer>
           ) : null}
-        </div>
+        </Content>
       </Spin>
     </LoggedPage>
   );

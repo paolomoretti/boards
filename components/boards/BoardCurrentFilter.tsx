@@ -86,6 +86,9 @@ export default function BoardCurrentFilter() {
     padding: 10
   } : {};
 
+  if (!currentFilters || currentFilters.length === 0) {
+    return null;
+  }
   return (
     <Row align={'middle'} justify={'center'} style={rowStile}>
       {currentFilters.map((item: ReactNode, index: number) => (

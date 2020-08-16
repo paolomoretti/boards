@@ -8,8 +8,11 @@ import { ModalChangeBoardCover } from '../modals/ModalChangeBoardCover';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
 import { useDispatch } from 'react-redux';
 import { updateBoard } from '../../data/store/actions';
+import { ImageCanvas } from '../shared/ImageCanvas';
 
 const Wrapper = styled.div`
+  margin-bottom: -1px;
+  
   img {
     display: block;
     width: 100%;
@@ -70,7 +73,7 @@ export default function BoardCardCover({ board }: { board: Board; }) {
 
   return (
     <Wrapper>
-      <img src={board.avatar}/>
+      <ImageCanvas src={board.avatar!} height={230} />
       <EditButton onClick={changeCover} shape="circle" icon={<EditFilled />} />
     </Wrapper>
   )

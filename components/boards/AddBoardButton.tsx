@@ -7,13 +7,9 @@ import {ModalAddBoard} from '../modals/ModalAddBoard';
 import {updateBoards} from '../../data/store/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {getBoards} from "../../data/store/selectors";
+import { Styles } from '../../styles/vars';
 
 const Wrapper = styled.div`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 10000;
-  
   button {
     transform: scale(1.3);
   }
@@ -37,7 +33,7 @@ export default function AddBoardButton() {
   };
 
   return (
-    <Wrapper>
+    <Wrapper style={Styles.ContextualAddButton}>
       <Button
         type={'primary'}
         shape={'circle'}

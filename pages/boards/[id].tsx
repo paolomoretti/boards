@@ -20,16 +20,19 @@ import {
 } from '../../data/store/actions';
 import { getBoardTiles } from '../../utils/fetchers/getBoardTiles';
 import BoardCurrentFilter from '../../components/boards/BoardCurrentFilter';
-import { Size } from '../../styles/vars';
+import { Size, Zindex } from '../../styles/vars';
 
 const LoadMoreContainer = styled.div`
   height: 70px;
   margin-top: 20px;
 `;
-
-// export class SingleBoardPage extends React.Component<any, any> {
-//
-// }
+const AppWidthContainer = styled.div`
+  max-width: ${Size.MAX_APP_WIDTH + 40}px;
+  margin: 0 auto;
+`;
+const BoardHeaderContainer = styled(Affix)`
+  z-index: ${Zindex.BOARD_HEADER};
+`
 
 export default function SingleBoardPage() {
   const router = useRouter()
@@ -94,16 +97,18 @@ export default function SingleBoardPage() {
   return (
     <LoggedPage>
       <Spin spinning={!board || isLoading}>
-        <Affix offsetTop={Size.HEADER_HEIGHT} style={{zIndex: 900}}>
+        <BoardHeaderContainer offsetTop={Size.HEADER_HEIGHT}>
           <BoardHeader board={board!} />
-        </Affix>
+        </BoardHeaderContainer>
         <BoardCurrentFilter />
         {boardTiles && board && (
-          <BoardTilesList
-            tiles={boardTiles}
-            board={board!}
-            onLoadMore={onLoadMore}
-          />
+          <AppWidthContainer>
+            <BoardTilesList
+              tiles={boardTiles}
+              board={board!}
+              onLoadMore={onLoadMore}
+            />
+          </AppWidthContainer>
         )}
         <Spin tip={'Loading more ...'} spinning={isLoadingMore}>
           <LoadMoreContainer />

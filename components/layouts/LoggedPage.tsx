@@ -7,8 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getToken, getUser } from '../../data/store/selectors';
 import { setToken, setUser } from '../../data/store/actions';
 import { Size } from '../../styles/vars';
+import styled from 'styled-components';
 
 const { Content } = Layout;
+const AppContent = styled(Content)`
+  min-height: calc(100vh - ${Size.HEADER_HEIGHT}px);
+`;
 
 export default function LoggedPage({ children }: { children: ReactNode; }) {
   const dispatch = useDispatch();
@@ -55,9 +59,9 @@ export default function LoggedPage({ children }: { children: ReactNode; }) {
         <div style={{zIndex: 1000, position: 'relative'}}>
           <AppHeader />
         </div>
-        <Content style={{minHeight: `calc(100vh - ${Size.HEADER_HEIGHT}px)`}}>
+        <AppContent>
           {ready && children}
-        </Content>
+        </AppContent>
       </Spin>
     </Layout>
   )

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Checkbox, Dropdown, Menu, Input } from 'antd';
+import { Button, Checkbox, Dropdown, Menu, Input, Badge } from 'antd';
 import { Board, GetBoardTilesParams } from '../../types/boards.types';
 import { DownOutlined } from '@ant-design/icons';
 import { useState } from 'react';
@@ -70,10 +70,12 @@ export default function BoardTileTagsSelector() {
         })}
       </Menu>
     )} trigger={['click']}>
-      <Button>
-        <span className={'hide-mobile'}>Tags</span>
-        <DownOutlined />
-      </Button>
+      <Badge dot={!!tileParams.tags}>
+        <Button>
+          <span className={'hide-mobile'}>Tags</span>
+          <DownOutlined />
+        </Button>
+      </Badge>
     </Dropdown>
   );
 }

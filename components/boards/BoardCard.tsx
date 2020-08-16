@@ -8,6 +8,23 @@ import { deleteBoard } from '../../utils/fetchers/deleteBoard';
 import * as _ from 'lodash';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
 import BoardCardCover from './BoardCardCover';
+import styled from 'styled-components';
+import { Shadows } from '../../styles/vars';
+
+const Container = styled(Card)`
+  transition: transform .2s, box-shadow .2s; 
+  border-radius: 5px;
+  
+  .ant-card-cover {
+    margin: 0;
+  }
+  
+  &:hover {
+    cursor: pointer;
+    transform: translate(0, -4px);
+    box-shadow: ${Shadows.POP_OUT};
+  }
+`
 
 export default function BoardCard({ board }: { board: Board; }) {
   const dispatch = useDispatch();
@@ -19,7 +36,7 @@ export default function BoardCard({ board }: { board: Board; }) {
   }
 
   return (
-    <Card
+    <Container
       bodyStyle={{display: 'none'}}
       title={board.name}
       cover={<BoardCardCover board={board} />}
