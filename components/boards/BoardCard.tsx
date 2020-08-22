@@ -41,7 +41,7 @@ export default function BoardCard({ board }: { board: Board; }) {
       title={board.name}
       cover={<BoardCardCover board={board} />}
       extra={[
-        <div onClick={stopBubblingUp}>
+        <div onClick={stopBubblingUp} key={'delete-action'}>
           <Popconfirm
             title="Are you sure you want to delete this board?"
             onConfirm={confirm}

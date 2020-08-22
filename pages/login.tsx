@@ -13,7 +13,7 @@ const { Content } = Layout;
 const LoginCard = styled(Card)`
   max-width: 400px;
   margin: 0 auto;
-`
+`;
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
