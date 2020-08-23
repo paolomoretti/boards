@@ -50,14 +50,15 @@ const PageHeaderStyled = styled(PageHeader)`
 
 export const BoardHeader = ({ board }: { board: Board; }) => {
   const [showMobile, setShowMobile] = useState<boolean>(false);
-  if (!board) {
-    return null;
-  }
-
   const router = useRouter();
   const dispatch = useDispatch();
   const boardTiles: Array<BoardTile> = useSelector(getCurrentBoardTiles);
   const getTileParams: Partial<GetBoardTilesParams> = useSelector(getBoardTileParams);
+
+  if (!board) {
+    return null;
+  }
+
   const pageHeaderStyle: CSSProperties = {
     backgroundColor: 'white',
     padding: '5px 24px'
@@ -76,39 +77,39 @@ export const BoardHeader = ({ board }: { board: Board; }) => {
         dispatch(updateCurrentBoardTiles([content, ...boardTiles]))
       }
       modalClose();
-    }
+    };
     const modal = Modal.info({
       title: 'Add content',
       content: <ModalAddBoardContent boardId={board.id} onClose={modalClose} onAdd={onAdd} />,
       className: 'modal-no-buttons',
       maskClosable: true
     });
-  }
+  };
 
   const onSearchChanged = (keyword: string) => {
     const newParams: Partial<GetBoardTilesParams> = Object.assign({}, getTileParams, { search_text: keyword });
     dispatch(setBoardTilesParams(newParams));
-  }
+  };
 
   const onHeaderClick = (e: SyntheticEvent) => {
     if (e.target && (e.target as HTMLDivElement).className === 'ant-page-header-heading') {
       window.scrollTo({ top: 0, behavior: 'smooth'})
     }
-  }
+  };
 
   const Filters = isMobile() && !showMobile ?
     [
-      <Button icon={<FilterOutlined />} shape={'circle'} onClick={() => setShowMobile(true)} />
+      <Button key={'show-filters'} icon={<FilterOutlined />} shape={'circle'} onClick={() => setShowMobile(true)} />
     ] : [
       <BoardTileTagsSelector key={'tags'} />,
-      <BoardTileApprovedSelector />,
+      <BoardTileApprovedSelector key={'star'} />,
       <Search
         style={{maxWidth: 200}}
         key={'search'}
         placeholder={`Search on board ${board && board.name}`}
         onSearch={onSearchChanged}
       />,
-      isMobile() && <Button icon={<CloseOutlined />} type={'text'} onClick={() => setShowMobile(false)} />
+      isMobile() && <Button key={'close-filters'} icon={<CloseOutlined />} type={'text'} onClick={() => setShowMobile(false)} />
     ];
 
   return (

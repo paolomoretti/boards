@@ -39,9 +39,15 @@ export const Styles: Record<StyledType, CSSProperties> = {
     position: 'fixed',
     bottom: '20px',
     right: '20px',
-    zIndex: Zindex.ADD_BUTTON
+    zIndex: Zindex.ADD_BUTTON,
+    width: '100%',
+    maxWidth: `${Size.MAX_APP_WIDTH}px`,
+    textAlign: 'right',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    paddingRight: `20px`
   }
-}
+};
 
 export enum FileTypeIcon {
   // @ts-ignore

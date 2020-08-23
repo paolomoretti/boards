@@ -9,6 +9,34 @@ export interface Board {
   last_activity_date: number;
   name: string;
   new_items: number;
+  owner: User;
+  // access_level: "admin"
+  // description: "a"
+  // displayStyle: "card"
+  // email_invites: []
+  // engagement_value: 293
+  // ingest_email_address: "gricette-5378@boards.cronycle.com"
+  // last_activity_date: 1598143162
+  // notification_level: "all_notifications"
+  // share_as_feed: {active: false, target: "none", include_articles: true, include_notes: false,…}
+  // share_as_newsletter: {active: true, template_id: 0, draft_ids: [85],…}
+  // share_as_rss: {active: true, target: "public", order_by: "pin_date",…}
+  // share_as_source: {active: false, target: "none", include_articles: false, include_notes: false,…}
+  // share_global_search: {active: false, target: "none", approved: false}
+  // share_to_buffer: {active: false, approved_items_only: true, include_articles: true, include_notes: true,…}
+  // share_to_hootsuite: {active: false, approved_items_only: false, include_articles: false, include_files: false,…}
+  // share_to_ms_teams: {active: false, approved_items_only: false, include_articles: false, include_notes: false,…}
+  // share_to_slack: {active: true, approved_items_only: false, include_articles: true, include_notes: false,…}
+  // share_to_wordpress: {active: false, approved_items_only: false, include_articles: false, include_notes: false,…}
+  // share_to_zapier: {active: false, approved_items_only: false, include_articles: false, include_notes: false,…}
+  // slack_listeners_attributes: []
+  // teams: [{id: 2, name: "Con Sari", avatar: {,…}, created_at: 1481044084,…},…]
+  // tickers: []
+  // topic_board_sources: []
+  // used_storage_quota: 38354110
+  // user_ids: [924, 5613, 5839]
+  // users: [{id: 924, full_name: "Paolo Moretti", image_url: null, username: "little_brown", avatar: {,…},…},…]
+  // visibility: "private"
 }
 
 export interface BoardTile {

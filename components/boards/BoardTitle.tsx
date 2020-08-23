@@ -2,19 +2,15 @@ import * as React from 'react';
 import { Board } from '../../types/boards.types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoards, getCurrentBoard, getCurrentBoardItemsCount } from '../../data/store/selectors';
-import { Dropdown, Menu, Typography } from 'antd';
+import {Divider, Dropdown, Menu, Space, Typography} from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { updateBoards } from '../../data/store/actions';
 import { getBoards as fetchBoards } from '../../utils/fetchers/getBoards';
+import {UserBadge} from "../shared/UserBadge";
 
 const { Text } = Typography;
-const ItemsCountSpan = styled(Text)`
-  font-size: 13px;
-  margin-left: 13px;
-  font-weight: 300;
-`;
 const TitleContainer = styled.h3`
   display: inline-block;
   padding: 0 5px;
@@ -25,6 +21,11 @@ const TitleContainer = styled.h3`
     border-radius: 2px;
     background-color: #eee;
   }
+`;
+const SpaceStyled = styled(Space)`
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 300;
 `;
 
 interface BoardTitleProps {
@@ -63,7 +64,11 @@ export const BoardTitle = ({ board }: BoardTitleProps) => {
           ): 'Loading ...'}
         </TitleContainer>
       </Dropdown>
-      {itemsCount && <ItemsCountSpan key={'count'} type={'secondary'}>{itemsCount} items</ItemsCountSpan>}
+      <Divider type={'vertical'} />
+      <SpaceStyled size={5}>
+        <UserBadge size={22} user={board.owner} />
+        {itemsCount && <Text key={'count'} type={'secondary'}>{itemsCount} items</Text>}
+      </SpaceStyled>
     </>
   )
 }

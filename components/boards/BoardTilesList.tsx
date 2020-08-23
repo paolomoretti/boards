@@ -6,6 +6,9 @@ import Masonry from 'react-masonry-css';
 import { cardColBreakpoints } from '../../styles/vars';
 import * as _ from 'lodash';
 import { Empty } from 'antd';
+import { connect } from 'react-redux';
+import {updateCurrentBoardTiles} from "../../data/store/actions";
+import {Action} from "redux";
 
 const MasonryContainer = styled(Masonry)`
   padding: 10px;
@@ -15,21 +18,22 @@ const MasonryContainer = styled(Masonry)`
   .my-masonry-grid_column {
     background-clip: padding-box;
   }
-`
+`;
 
 interface BoardTilesListProps {
   tiles: Array<BoardTile>;
   board: Board;
   onLoadMore(): void;
+  dispatch(action: Action): void;
 }
 
-export default class BoardTilesList extends React.Component<BoardTilesListProps> {
+class BoardTilesList extends React.Component<BoardTilesListProps> {
   onScroll = () => {
     const threshold = window.innerHeight * .4;
     if (this.props.onLoadMore && document.body.scrollHeight - window.scrollY - window.innerHeight < threshold) {
       this.props.onLoadMore();
     }
-  }
+  };
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll)
@@ -37,6 +41,7 @@ export default class BoardTilesList extends React.Component<BoardTilesListProps>
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll);
+    this.props.dispatch(updateCurrentBoardTiles([]));
   }
 
   shouldComponentUpdate(nextProps: Readonly<BoardTilesListProps>, _nextState: Readonly<{}>, _nextContext: any): boolean {
@@ -67,3 +72,5 @@ export default class BoardTilesList extends React.Component<BoardTilesListProps>
     );
   }
 }
+
+export default connect()(BoardTilesList);

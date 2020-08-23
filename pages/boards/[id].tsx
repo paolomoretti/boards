@@ -32,10 +32,10 @@ const AppWidthContainer = styled.div`
 `;
 const BoardHeaderContainer = styled(Affix)`
   z-index: ${Zindex.BOARD_HEADER};
-`
+`;
 
 export default function SingleBoardPage() {
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
   const getTilesParams = useSelector(getBoardTileParams);
   const boardTiles = useSelector(getCurrentBoardTiles);
@@ -67,7 +67,7 @@ export default function SingleBoardPage() {
       max_timestamp: boardTiles![boardTiles!.length - 1].created_at
     });
     dispatch(setBoardTilesParams(newParams));
-  }
+  };
 
   useEffect(() => {
     if (id && (

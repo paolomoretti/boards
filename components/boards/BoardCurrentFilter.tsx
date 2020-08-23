@@ -12,7 +12,7 @@ const { Text, Link } = Typography;
 const Separator = styled(Divider)`
   border-color: #ccc;
   margin-right: 12px;
-`
+`;
 
 export default function BoardCurrentFilter() {
   const dispatch = useDispatch();
@@ -25,25 +25,25 @@ export default function BoardCurrentFilter() {
       tags: newTagsList.join(',')
     });
     dispatch(setBoardTilesParams(newFilterParams));
-  }
+  };
 
   const removeFilter = (filter: string) => {
     const newFilterParams: Partial<GetBoardTilesParams> = Object.assign({}, filterParams, {
       filters: _.without(filterParams.filters, filter)
     });
     dispatch(setBoardTilesParams(newFilterParams));
-  }
+  };
 
   const clearAll = () => {
     dispatch(setBoardTilesParams(initialState as any));
-  }
+  };
 
   const removeKeyword = () => {
     const newFilterParams: Partial<GetBoardTilesParams> = Object.assign({}, filterParams, {
       search_text: ''
     });
     dispatch(setBoardTilesParams(newFilterParams));
-  }
+  };
 
   if (filterParams.search_text && filterParams.search_text.length > 0) {
     currentFilters.push(
@@ -97,7 +97,7 @@ export default function BoardCurrentFilter() {
         ) : item
       ))}
       {currentFilters.length > 0 && (
-        [<Separator type="vertical" />, <Link onClick={clearAll}>Clear all</Link>]
+        [<Separator type="vertical" key={'separator'} />, <Link onClick={clearAll} key={'clear-link'}>Clear all</Link>]
       )}
     </Row>
   )
