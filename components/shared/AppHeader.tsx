@@ -36,7 +36,7 @@ export default function AppHeader({ guest }: AppHeaderProps) {
     <Affix offsetTop={0} style={{zIndex: 1000, width: '100%'}}>
       <Container>
         <HeaderRow align={'middle'}>
-          <Col flex={1}>
+          <Col key={'header-logo'} flex={1}>
             <Link href={`/`}>
             <span>
               <LogoEl />
@@ -44,10 +44,10 @@ export default function AppHeader({ guest }: AppHeaderProps) {
             </Link>
           </Col>
           {!guest && [
-            <Col flex={100} style={{padding: 0}}>
+            <Col flex={100} style={{padding: 0}} key={'header-search'}>
               <AppSearch />
             </Col>,
-            <Col flex={1}>
+            <Col flex={1} key={'header-user-icon'}>
               {user && <UserMenu user={user} />}
             </Col>
           ]}
