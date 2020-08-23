@@ -54,7 +54,6 @@ export const BoardTileComments = ({ tile }: { tile: BoardTile; }) => {
     })
     // remove comment from list (if not reply)
     setComments(_.reject(_comments, c => c.comment_id === commentId));
-    console.log(`new list`, _.reject(_comments, c => c.comment_id === commentId));
   }
 
   const onCommentReplied = (reply: TileComment) => {

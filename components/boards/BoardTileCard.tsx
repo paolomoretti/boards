@@ -78,7 +78,7 @@ export default function BoardTileCard({ tile: tileRef, boardId, actions }: Board
   const [showComments, setShowComments] = useState(false);
   const tiles: BoardTile[] = useSelector(getCurrentBoardTiles);
   let tile: BoardTile = _.find(tiles, t => t.id === tileRef.id)!;
-  if (!tile) {
+  if (!tile || tileRef.highlights) {
     tile = tileRef;
   }
   let $container: HTMLDivElement | null;
