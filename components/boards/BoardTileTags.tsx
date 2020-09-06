@@ -13,7 +13,7 @@ import { getBoard } from '../../utils/fetchers/getBoard';
 const ClickableTag = styled(Tag)`
   cursor: pointer;
   margin-bottom: 4px;
-`
+`;
 
 export default function BoardTileTags({ tile }: { tile: BoardTile; }) {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function BoardTileTags({ tile }: { tile: BoardTile; }) {
   const onSetTag = (tag: string) => {
     const newParams: Partial<GetBoardTilesParams> = Object.assign({}, tilesParams, {
       tags: _.chain(tags).concat(tag).uniq().value().join(',')
-    })
+    });
     dispatch(setBoardTilesParams(_.omit(newParams, 'max_timestamp')));
   };
 
@@ -48,7 +48,7 @@ export default function BoardTileTags({ tile }: { tile: BoardTile; }) {
     tag = tag.toLowerCase();
     const newParams: Partial<GetBoardTilesParams> = Object.assign({}, tilesParams, {
       tags: _.chain(tags).without(tag).value().join(',')
-    })
+    });
     if (tags.indexOf(tag) > -1) {
       // selected - should not remove it from the tile
       dispatch(setBoardTilesParams(_.omit(newParams, 'max_timestamp')));
@@ -59,7 +59,7 @@ export default function BoardTileTags({ tile }: { tile: BoardTile; }) {
   };
 
   const onAddTag = (tag: string) => {
-    const updatedTagsList: Array<string> = [...tile.user_tags, tag];
+    const updatedTagsList: Array<string> = _.uniq([...tile.user_tags, tag]);
     onChangeTagsList(updatedTagsList);
   };
 

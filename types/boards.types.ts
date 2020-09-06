@@ -95,7 +95,7 @@ export interface Article {
   // comment_count: null
   content: string;
   //   created_at: 1593301815
-  description: string;
+  description: string | ReactNode;
   // external_tags: []
   // id: 1803331209
   lead_image: {
@@ -128,6 +128,7 @@ export interface File {
   original_filename: string;
   summary: string;
   title: string | ReactNode;
+  content?: string; // highight content
   // updated_at: 1576150427
 }
 

@@ -26,7 +26,7 @@ const BoardsContainer = styled.div`
   }
 `;
 
-export function Boards({ boards }: { boards: Array<Board> | undefined; }) {
+export default function Boards({ boards }: { boards: Array<Board> | undefined; }) {
   if (!boards || !Array.isArray(boards)) {
     return null;
   }

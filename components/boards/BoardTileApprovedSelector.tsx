@@ -43,7 +43,7 @@ export default function BoardTileApprovedSelector() {
 
   return (
     <Tooltip title="Click to filter by approved/unapproved" mouseEnterDelay={1}>
-      <Button style={iconStyle} shape="circle" onClick={onChangeStarred}>
+      <Button type={'text'} style={iconStyle} shape="circle" onClick={onChangeStarred}>
         <StarOutlined style={iconStyle} />
       </Button>
     </Tooltip>

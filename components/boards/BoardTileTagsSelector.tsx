@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Button, Checkbox, Dropdown, Menu, Input, Badge } from 'antd';
 import { Board, GetBoardTilesParams } from '../../types/boards.types';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, TagsOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import * as _ from "lodash";
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardTileParams, getCurrentBoard } from '../../data/store/selectors';
 import { setBoardTilesParams } from '../../data/store/actions';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
+import {isMobile} from "../../utils/isMobile";
 
 export default function BoardTileTagsSelector() {
   const dispatch = useDispatch();
@@ -46,10 +47,10 @@ export default function BoardTileTagsSelector() {
       onSearch('');
       setKeyword('');
     }
-  }
+  };
 
   return (
-    <Dropdown onVisibleChange={onVisibilityChange} placement="bottomCenter" overlayStyle={{maxHeight: 300, maxWidth: 300, overflowY: 'auto'}} key={10} overlay={(
+    <Dropdown arrow={true} onVisibleChange={onVisibilityChange} placement="bottomCenter" overlayStyle={{maxHeight: 300, maxWidth: 300, overflowY: 'auto'}} key={10} overlay={(
       <Menu style={{padding: 10}}>
         <Menu.Item key={'filter-input'} onClickCapture={stopBubblingUp}>
           <Input
@@ -71,9 +72,14 @@ export default function BoardTileTagsSelector() {
       </Menu>
     )} trigger={['click']}>
       <Badge dot={!!tileParams.tags}>
-        <Button>
-          <span className={'hide-mobile'}>Tags</span>
-          <DownOutlined />
+        <Button shape={isMobile() ? 'circle' : undefined} type={"text"}>
+          <span className={'show-mobile'}>
+            <TagsOutlined />
+          </span>
+          <span className={'hide-mobile'}>
+            Tags
+            <DownOutlined />
+          </span>
         </Button>
       </Badge>
     </Dropdown>

@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { ReactNode, useEffect, useState } from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import Numeral from 'numeral';
-import { File } from '../../types/boards.types';
-import { BoardTile } from './BoardTile';
+import {File} from '../../types/boards.types';
+import {BoardTile} from './BoardTile';
 import styled from 'styled-components';
-import { FileTypeIcon } from '../../styles/vars';
-import { Card, Typography } from 'antd';
-import { ProtectedImage } from '../shared/ProtectedImage';
-import { getBoardFileDownloadUrl } from '../../utils/fetchers/getBoardFileDownloadUrl';
-import { FileIcon } from '../shared/FileIcon';
+import {FileTypeIcon} from '../../styles/vars';
+import {Card, Typography} from 'antd';
+import {ProtectedImage} from '../shared/ProtectedImage';
+import {getBoardFileDownloadUrl} from '../../utils/fetchers/getBoardFileDownloadUrl';
+import {FileIcon} from '../shared/FileIcon';
+import {Quote} from "../shared/Quote";
 
 const { Paragraph, Text } = Typography;
 const { Meta } = Card;
@@ -91,6 +92,9 @@ export default function BoardTileFile({ file, footer, actions, tileId, boardId, 
         )}
       />
       {getFilePreview(file)}
+      {file.content && (
+        <Quote text={file.content} />
+      )}
       {children}
     </BoardTile>
   );

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Colors } from '../../styles/vars';
 import { Typography } from 'antd';
 import { ParagraphProps } from 'antd/lib/typography/Paragraph';
+import {ReactNode} from "react";
 
 const { Paragraph } = Typography;
 const QuoteStyle = styled(Paragraph)`
@@ -15,7 +16,7 @@ const QuoteStyle = styled(Paragraph)`
 `;
 
 interface QuoteProps extends ParagraphProps {
-  text: string;
+  text: string | ReactNode;
 }
 export const Quote = (props: QuoteProps) => {
   const { text } = props;

@@ -8,4 +8,9 @@ export const BoardTile = styled(ExtendedCard)`
   border-radius: 5px;
   overflow: hidden;
   box-shadow: 0 0 10px -2px #ccc;
+  
+  .ant-card-cover {
+    max-height: 300px;
+    overflow: hidden;
+  }
 `;

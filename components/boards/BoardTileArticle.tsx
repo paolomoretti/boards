@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Article, Highlight } from '../../types/boards.types';
+import {ReactNode} from 'react';
+import {Article, Highlight} from '../../types/boards.types';
 import styled from 'styled-components';
-import { BoardTile } from './BoardTile';
-import { ReactNode } from 'react';
-import { Image } from '../shared/Image';
-import { Quote } from '../shared/Quote';
-import { Card, Typography } from 'antd';
-import { HighlightText } from '../shared/Highlight';
+import {BoardTile} from './BoardTile';
+import {Quote} from '../shared/Quote';
+import {Card, Typography} from 'antd';
+import {HighlightText} from '../shared/Highlight';
+import {CDNImage} from "../shared/CDNImage";
 
 const { Meta } = Card;
 const { Paragraph } = Typography;
@@ -42,9 +42,10 @@ export default function BoardTileArticle({ link, highlights, actions, summary, f
     <BoardTile
       size={'small'}
       cover={
-        link.lead_image ? <Image
+        link.lead_image ? <CDNImage
           alt={link.name}
           src={link.lead_image.url_archived_small}
+          width={400}
         /> : null
       }
       actions={actions}

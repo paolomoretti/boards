@@ -1,26 +1,26 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Affix, message, Spin } from 'antd';
-import LoggedPage from '../../components/layouts/LoggedPage';
+import LoggedPage from '../../../components/layouts/LoggedPage';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
-import { getBoard } from '../../utils/fetchers/getBoard';
-import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types';
-import BoardTilesList from '../../components/boards/BoardTilesList';
+import { getBoard } from '../../../utils/fetchers/getBoard';
+import { Board, BoardTile, GetBoardTilesParams } from '../../../types/boards.types';
+import BoardTilesList from '../../../components/boards/BoardTilesList';
 import styled from 'styled-components';
 import _ from 'lodash';
-import { BoardHeader } from '../../components/boards/BoardHeader';
+import { BoardHeader } from '../../../components/boards/BoardHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBoardTileParams, getCurrentBoardTiles } from '../../data/store/selectors';
+import { getBoardTileParams, getCurrentBoardTiles } from '../../../data/store/selectors';
 import {
   setBoardTilesParams,
   setCurrentBoard,
   updateCurrentBoardItemsCount,
   updateCurrentBoardTiles
-} from '../../data/store/actions';
-import { getBoardTiles } from '../../utils/fetchers/getBoardTiles';
-import BoardCurrentFilter from '../../components/boards/BoardCurrentFilter';
-import { Size, Zindex } from '../../styles/vars';
+} from '../../../data/store/actions';
+import { getBoardTiles } from '../../../utils/fetchers/getBoardTiles';
+import BoardCurrentFilter from '../../../components/boards/BoardCurrentFilter';
+import { Size, Zindex } from '../../../styles/vars';
 
 const LoadMoreContainer = styled.div`
   height: 70px;

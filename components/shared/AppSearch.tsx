@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { SyntheticEvent } from 'react';
-import { Input, List, Spin } from 'antd';
+import {lazy, Suspense, SyntheticEvent} from 'react';
+import {Input, Spin} from 'antd';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { BoardSearchResult } from '../../types/boards.types';
-import AppSearchItem from './AppSearchItem';
-import { Router, withRouter } from 'next/router';
-import { SearchOutlined } from '@ant-design/icons';
-import { AppState } from '../../types/app.types';
+import {connect} from 'react-redux';
+import {BoardSearchResult} from '../../types/boards.types';
+import {Router, withRouter} from 'next/router';
+import {SearchOutlined} from '@ant-design/icons';
+import {AppState} from '../../types/app.types';
+
+const AppSearchResults = lazy(() => import('./AppSearchResults'));
 
 const Container = styled.div`
   max-width: 400px;
@@ -27,29 +28,6 @@ const Container = styled.div`
       background-color: rgba(0, 0, 0, .7);
     }
   }
-`;
-const ResultsContainer = styled.div`
-  position: fixed;
-  top: -2px;
-  left: 50%;
-  width: 100%;
-  bottom: 0;
-  max-height: 100%;
-  overflow-y: auto;
-  padding: 50px 10px 10px;
-  z-index: 0;
-  max-width: 600px;
-  transform: translateX(-50%);
-  
-  //position: absolute;
-  //top: 100%;
-  background-color: rgba(255, 255, 255, .9);
-  //padding: 10px;
-  //width: 100%;
-  //z-index: 1;
-  //border-top: 1px solid #eee;
-  //max-height: calc(100vh - 50px);
-  //overflow-y: auto;
 `;
 const InputStyled = styled(Input)`
   border: 0;
@@ -151,17 +129,9 @@ class AppSearch extends React.PureComponent<AppSearchProps, AppSearchState> {
             value={this.state.keyword}
           />
           {this.state.results && this.state.results.length > 0 && (
-            <ResultsContainer>
-              <h5>Results ({this.state.count})</h5>
-              <List
-                itemLayout="vertical"
-                dataSource={this.state.results}
-                renderItem={(item: BoardSearchResult) => (
-                  <AppSearchItem item={item} key={item.id} />
-                )}
-              >
-              </List>
-            </ResultsContainer>
+            <Suspense fallback={<Spin spinning={true} />}>
+              <AppSearchResults count={this.state.count} results={this.state.results} />
+            </Suspense>
           )}
         </Container>
       </Spin>

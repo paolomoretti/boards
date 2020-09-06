@@ -33,8 +33,11 @@ export default (state = initialState, action: Action) => {
       )]}
 
     case ActionTypes.UPDATE_BOARDS:
-      const boards: Array<Board> = action.payload.sort((a: Board, b: Board) => b.last_activity_date - a.last_activity_date)
-      return { ...state, boards: [...boards]}
+      if (action.payload) {
+        const boards: Array<Board> = action.payload.sort((a: Board, b: Board) => b.last_activity_date - a.last_activity_date)
+        return { ...state, boards: [...boards]}
+      }
+      return { ...state };
 
     case ActionTypes.ADD_BOARD_CONTENT:
       const tileMock: Partial<BoardTile> = {

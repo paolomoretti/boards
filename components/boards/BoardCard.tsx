@@ -1,4 +1,4 @@
-import { Button, Card, Popconfirm } from 'antd';
+import {Button, Card, Popconfirm, Spin} from 'antd';
 import { Board } from '../../types/boards.types';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,9 +7,10 @@ import { updateBoards } from '../../data/store/actions';
 import { deleteBoard } from '../../utils/fetchers/deleteBoard';
 import * as _ from 'lodash';
 import { stopBubblingUp } from '../../utils/events/stopBubblingUp';
-import BoardCardCover from './BoardCardCover';
 import styled from 'styled-components';
 import { Shadows } from '../../styles/vars';
+import {lazy, Suspense} from "react";
+const BoardCardCover = lazy(() => import('./BoardCardCover'));
 
 const Container = styled(Card)`
   transition: transform .2s, box-shadow .2s; 
@@ -24,7 +25,7 @@ const Container = styled(Card)`
     transform: translate(0, -4px);
     box-shadow: ${Shadows.POP_OUT};
   }
-`
+`;
 
 export default function BoardCard({ board }: { board: Board; }) {
   const dispatch = useDispatch();
@@ -33,13 +34,17 @@ export default function BoardCard({ board }: { board: Board; }) {
   const confirm = () => {
     deleteBoard(board.id);
     dispatch(updateBoards(_.filter(boards, b => b.id !== board.id)));
-  }
+  };
 
   return (
     <Container
       bodyStyle={{display: 'none'}}
       title={board.name}
-      cover={<BoardCardCover board={board} />}
+      cover={(
+        <Suspense fallback={<Spin spinning={true} />}>
+          <BoardCardCover board={board} />
+        </Suspense>
+      )}
       extra={[
         <div onClick={stopBubblingUp} key={'delete-action'}>
           <Popconfirm

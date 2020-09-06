@@ -18,12 +18,12 @@ export default function AddTag({ onAddTag, options }: AddTagProps) {
 
   const onChange = (tag: string) => {
     setValue(tag);
-  }
+  };
 
   const onBlur = () => {
     setEdit(false);
     setValue('');
-  }
+  };
 
   const onSelect = (tag: string) => {
     tag = tag.trim().replace(/\s/gi, '-');
@@ -31,9 +31,8 @@ export default function AddTag({ onAddTag, options }: AddTagProps) {
     if (onAddTag) {
       onAddTag(tag);
       setValue('');
-      setEdit(false);
     }
-  }
+  };
 
   const onSearch = (keyword: string) => {
     const list: Array<{ value: string; }> = [];
@@ -48,7 +47,7 @@ export default function AddTag({ onAddTag, options }: AddTagProps) {
       list.push({ value: keyword });
     }
     setSuggestions(list);
-  }
+  };
 
   if (edit) {
     return (

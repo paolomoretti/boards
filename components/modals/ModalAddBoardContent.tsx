@@ -223,9 +223,9 @@ const UploadFileForm = ({ boardId, onUploaded, onClose, boardTags }: ModalAddBoa
       </Form>
     </Spin>
   )
-}
+};
 
-export const ModalAddBoardContent = ({ boardId, onClose, onAdd }: ModalAddBoardContentProps) => {
+const ModalAddBoardContent = ({ boardId, onClose, onAdd }: ModalAddBoardContentProps) => {
   const [uploadType, setUploadType] = useState<'text' | 'file'>('text');
 
   const onUploaded = (tile: BoardTile) => {
@@ -262,4 +262,6 @@ export const ModalAddBoardContent = ({ boardId, onClose, onAdd }: ModalAddBoardC
       )}
     </div>
   )
-}
+};
+
+export default ModalAddBoardContent;

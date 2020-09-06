@@ -18,7 +18,8 @@ const Container = styled.div`
 const HeaderRow = styled(Row)`
   min-height: ${Size.HEADER_HEIGHT}px;
   max-width: ${Size.MAX_APP_WIDTH + 40}px;
-  margin: 0 auto;
+  margin: 0 auto; 
+  flex-wrap: nowrap !important; 
   
   > * {
     padding: 0 20px;

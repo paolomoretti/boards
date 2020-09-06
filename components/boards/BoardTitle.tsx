@@ -65,7 +65,7 @@ export const BoardTitle = ({ board }: BoardTitleProps) => {
         </TitleContainer>
       </Dropdown>
       <Divider type={'vertical'} />
-      <SpaceStyled size={5}>
+      <SpaceStyled size={5} className={'hide-mobile'}>
         <UserBadge size={22} user={board.owner} />
         {itemsCount && <Text key={'count'} type={'secondary'}>{itemsCount} items</Text>}
       </SpaceStyled>

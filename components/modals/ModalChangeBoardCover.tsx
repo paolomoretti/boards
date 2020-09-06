@@ -11,7 +11,7 @@ interface ModalChangeBoardCoverProps {
   boardId: number;
 }
 
-export const ModalChangeBoardCover = ({ onClose, boardId }: ModalChangeBoardCoverProps) => {
+const ModalChangeBoardCover = ({ onClose, boardId }: ModalChangeBoardCoverProps) => {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
@@ -70,4 +70,6 @@ export const ModalChangeBoardCover = ({ onClose, boardId }: ModalChangeBoardCove
       </Form>
     </Spin>
   )
-}
+};
+
+export default ModalChangeBoardCover;

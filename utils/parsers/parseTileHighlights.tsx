@@ -26,8 +26,12 @@ export function parseTileHighlights(tile: BoardTile): BoardTile {
       case 'link':
         // @ts-ignore
         Object.keys(h as Record<HighlightArticleKey, string | Array<string>>).map((subject: HighlightArticleKey) => {
-          // @ts-ignore
-          tile.link!.link[subject] = <HighlightText text={typeof h[subject] === 'string' ? h[subject] as string : (h[subject] as Array<string>).join('')} />;
+          if (subject === 'content') {
+            tile.link!.link.description = <HighlightText text={typeof h[subject] === 'string' ? h[subject] as string : (h[subject] as Array<string>).join('')} />;
+          } else {
+            // @ts-ignore
+            tile.link!.link[subject] = <HighlightText text={typeof h[subject] === 'string' ? h[subject] as string : (h[subject] as Array<string>).join('')} />;
+          }
         });
         break;
 
