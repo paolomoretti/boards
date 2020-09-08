@@ -23,7 +23,7 @@ const Container = styled.div`
 export default function BoardBadge({ board }: { board: Board; }) {
   return (
     <Container>
-      {board.avatar && <ImageCanvas width={30} height={30} src={board.avatar} />}
+      {board.avatar && <ImageCanvas width={30} height={30} src={board.avatar as string} />}
       <h4>{board.name}</h4>
     </Container>
   )

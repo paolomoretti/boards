@@ -10,13 +10,15 @@ export const cardColBreakpoints = {
 
 export enum Size {
   HEADER_HEIGHT = 50,
-  MAX_APP_WIDTH = 1400
+  MAX_APP_WIDTH = 1400,
+  GUTTER = 20
 }
 
 export enum Colors {
   APP_BG = '#f0f2f5',
   APP_HEADER_BG = '#999',
-  PRIMARY = '#861d1b',
+  PRIMARY = '#83cbff',
+  LINK = '#47809c',
   SUCCESS = '#52c41a',
   ERROR = '#c00',
   NOTE = '#fef2da'

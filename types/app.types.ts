@@ -7,6 +7,7 @@ export interface AppState {
   guest?: boolean;
   token?: string;
   user?: User;
+  processing: boolean;
 
   boards?: Array<Board>;
   boardTilesParams: GetBoardTilesParams;

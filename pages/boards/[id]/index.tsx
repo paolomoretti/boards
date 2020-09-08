@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBoardTileParams, getCurrentBoardTiles } from '../../../data/store/selectors';
 import {
   setBoardTilesParams,
-  setCurrentBoard,
+  setCurrentBoard, setProcessing,
   updateCurrentBoardItemsCount,
   updateCurrentBoardTiles
 } from '../../../data/store/actions';
@@ -46,8 +46,10 @@ export default function SingleBoardPage() {
   const [ lastLoadedBoard, setLastLoadedBoard ] = useState();
   const { id } = router.query as { id: string; };
   let { data: board, error }: { data?: Board; error?: any; } = useSWR(`/boards/${id}`, () => {
+    dispatch(setProcessing(true));
     return getBoard(parseInt(id))
       .then((b: Board) => {
+        dispatch(setProcessing(false));
         dispatch(setCurrentBoard(b));
         setLastLoadedBoard(b);
         return b;
@@ -80,17 +82,20 @@ export default function SingleBoardPage() {
       if (!isLoadingMore) {
         setLoading(true);
       }
-      getBoardTiles(parseInt(id), getTilesParams).then(({ results, num_found }: { results: Array<BoardTile>; num_found: number; }) => {
-        setCanLoadMore(results.length === getTilesParams.per_page);
-        const newBoardTiles = _.chain(isLoadingMore ? boardTiles : [])
-          .concat(results)
-          .uniqBy('id')
-          .value();
-        dispatch(updateCurrentBoardTiles(newBoardTiles));
-        dispatch(updateCurrentBoardItemsCount(num_found));
-        setLoading(false);
-        setLoadingMore(false);
-      });
+      dispatch(setProcessing(true));
+      getBoardTiles(parseInt(id), getTilesParams)
+        .then(({ results, num_found }: { results: Array<BoardTile>; num_found: number; }) => {
+          setCanLoadMore(results.length === getTilesParams.per_page);
+          const newBoardTiles = _.chain(isLoadingMore ? boardTiles : [])
+            .concat(results)
+            .uniqBy('id')
+            .value();
+          dispatch(setProcessing(false));
+          dispatch(updateCurrentBoardTiles(newBoardTiles));
+          dispatch(updateCurrentBoardItemsCount(num_found));
+          setLoading(false);
+          setLoadingMore(false);
+        });
     }
   }, [id, getTilesParams]);
 

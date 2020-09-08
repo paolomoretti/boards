@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Button, Checkbox, Dropdown, Menu, Input, Badge } from 'antd';
+import {Button, Checkbox, Dropdown, Menu, Input, Badge, Space} from 'antd';
 import { Board, GetBoardTilesParams } from '../../types/boards.types';
 import { DownOutlined, TagsOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import {CSSProperties, useState} from 'react';
 import * as _ from "lodash";
 import { useDispatch, useSelector } from 'react-redux';
 import { getBoardTileParams, getCurrentBoard } from '../../data/store/selectors';
@@ -33,7 +33,7 @@ export default function BoardTileTagsSelector() {
       tags: newTagsList.join(',')
     }), 'max_timestamp');
     dispatch(setBoardTilesParams(newParams));
-  }
+  };
 
   const onSearch = (searchText: string) => {
     const newOptions: Array<string> = _.chain(board.board_tags)
@@ -42,6 +42,7 @@ export default function BoardTileTagsSelector() {
     setOptions(newOptions);
     setKeyword(searchText);
   };
+
   const onVisibilityChange = (visibility: boolean) => {
     if (!visibility) {
       onSearch('');
@@ -49,9 +50,16 @@ export default function BoardTileTagsSelector() {
     }
   };
 
+  const menuStyles: CSSProperties = {
+    padding: 10,
+    maxHeight: 300,
+    maxWidth: 300,
+    overflowY: 'auto'
+  };
+
   return (
-    <Dropdown arrow={true} onVisibleChange={onVisibilityChange} placement="bottomCenter" overlayStyle={{maxHeight: 300, maxWidth: 300, overflowY: 'auto'}} key={10} overlay={(
-      <Menu style={{padding: 10}}>
+    <Dropdown arrow={true} onVisibleChange={onVisibilityChange} placement="bottomCenter" key={10} overlay={(
+      <Menu style={menuStyles}>
         <Menu.Item key={'filter-input'} onClickCapture={stopBubblingUp}>
           <Input
             autoFocus={true}
@@ -76,10 +84,10 @@ export default function BoardTileTagsSelector() {
           <span className={'show-mobile'}>
             <TagsOutlined />
           </span>
-          <span className={'hide-mobile'}>
-            Tags
+          <Space className={'hide-mobile'}>
+            <span>Tags</span>
             <DownOutlined />
-          </span>
+          </Space>
         </Button>
       </Badge>
     </Dropdown>

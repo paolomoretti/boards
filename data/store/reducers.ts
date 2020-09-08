@@ -5,6 +5,7 @@ import { Board, BoardTile } from '../../types/boards.types';
 import { appSearchDefault } from '../../utils/fetchers/appSearchDefault';
 
 export const initialState = Object.freeze<AppState>({
+  processing: false,
   boardTilesParams: {
     clean_description: true,
     exclude_sources: true,
@@ -24,13 +25,16 @@ export const initialState = Object.freeze<AppState>({
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
+    case ActionTypes.SET_PROCESSING:
+      return { ...state, processing: action.payload };
+
     case ActionTypes.CLOSE_CURRENT_BOARD:
       return { ...state, currentBoardItemsCount: 0, currentBoardTiles: [] };
 
     case ActionTypes.UPDATE_BOARD:
       return { ...state, boards: [...(state.boards || []).map(board =>
         board.id === action.payload.id ? action.payload : board
-      )]}
+      )]};
 
     case ActionTypes.UPDATE_BOARDS:
       if (action.payload) {

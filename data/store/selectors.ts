@@ -4,6 +4,7 @@ import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types'
 
 export const app = (state: { app: AppState }): AppState => state.app;
 
+export const getProcessing = createSelector([app], (app): boolean => app.processing);
 export const getBoards = createSelector([app], (app): Array<Board> | undefined => app.boards);
 export const getBoardTileParams = createSelector([app], (app): GetBoardTilesParams => app.boardTilesParams);
 export const getCurrentBoard = createSelector([app], (app): Board | undefined => app.currentBoard);

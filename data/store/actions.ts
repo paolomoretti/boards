@@ -3,6 +3,7 @@ import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types'
 
 export enum ActionTypes {
   // App / generic
+  SET_PROCESSING,
   SET_TOKEN,
   SHOW_MODAL,
   SET_APP_SEARCH,
@@ -32,6 +33,11 @@ export type Action = {
   type: ActionTypes;
   payload?: any;
 };
+
+export const setProcessing = (isProcessing: boolean) => ({
+  type: ActionTypes.SET_PROCESSING,
+  payload: isProcessing
+});
 
 export const setBoardTilesParams = (params: Partial<GetBoardTilesParams>) => ({
   type: ActionTypes.SET_BOARD_TILE_PARAMS,

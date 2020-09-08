@@ -22,6 +22,7 @@ import { BoardTileCommentsCount } from './BoardTileCommentsCount';
 import { BoardTileComments } from './BoardTileComments';
 import { BoardTileFileDownload } from './BoardTileFileDownload';
 import { parseTileHighlights } from '../../utils/parsers/parseTileHighlights';
+import {LineLoading} from "../shared/LineLoading";
 
 const { Paragraph } = Typography;
 const TileContainer = styled.div`
@@ -166,84 +167,86 @@ export default function BoardTileCard({ tile: tileRef, boardId, actions }: Board
 
   return (
     <TileContainer className={getClassNames(tile)} ref={el => $container = el} onClick={onClickContainer}>
-      {tile.tile_type === 'link' && (
-        <BoardTileArticle
-          link={tile.link!.link}
-          summary={tile.link!.user_summary}
-          onChangeSummary={onChangeArticleSummary}
-          footer={footer}
-          actions={!showComments && actions !== false && [
-            <BoardTileFeedback tile={tile} boardId={boardId} />,
-            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
-            <BoardTileStar tile={tile} boardId={boardId} />,
-            <Popconfirm
-              onConfirm={() => setDeleted(true)}
-              title="Are you sure you want to delete this content?"
-              placement={'top'}
-              icon={<DeleteOutlined style={{ color: 'red' }}/>}
-            >
-              <DeleteOutlined />
-            </Popconfirm>
-          ]}
-        >
-          <BoardTileExtraContent tile={tile} />
-        </BoardTileArticle>
-      )}
+      <LineLoading loading={tile.loading}>
+        {tile.tile_type === 'link' && (
+          <BoardTileArticle
+            link={tile.link!.link}
+            summary={tile.link!.user_summary}
+            onChangeSummary={onChangeArticleSummary}
+            footer={footer}
+            actions={!showComments && actions !== false && [
+              <BoardTileFeedback tile={tile} boardId={boardId} />,
+              <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
+              <BoardTileStar tile={tile} boardId={boardId} />,
+              <Popconfirm
+                onConfirm={() => setDeleted(true)}
+                title="Are you sure you want to delete this content?"
+                placement={'top'}
+                icon={<DeleteOutlined style={{ color: 'red' }}/>}
+              >
+                <DeleteOutlined />
+              </Popconfirm>
+            ]}
+          >
+            <BoardTileExtraContent tile={tile} />
+          </BoardTileArticle>
+        )}
 
-      {tile.tile_type === 'file' && (
-        <BoardTileFile
-          file={tile.file!}
-          boardId={boardId}
-          tileId={tile.id}
-          footer={footer}
-          actions={actions !== false && [
-            <BoardTileFeedback tile={tile} boardId={boardId} />,
-            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
-            <BoardTileStar tile={tile} boardId={boardId} />,
-            // <EditOutlined />,
-            <BoardTileFileDownload boardId={boardId} tile={tile} />,
-            <Popconfirm
-              onConfirm={() => setDeleted(true)}
-              title="Are you sure you want to delete this content?"
-              placement={'top'}
-              icon={<DeleteOutlined style={{ color: 'red' }}/>}
-            >
-              <DeleteOutlined />
-            </Popconfirm>
-          ]}
-        >
-          <BoardTileExtraContent tile={tile} />
-        </BoardTileFile>
-      )}
+        {tile.tile_type === 'file' && (
+          <BoardTileFile
+            file={tile.file!}
+            boardId={boardId}
+            tileId={tile.id}
+            footer={footer}
+            actions={actions !== false && [
+              <BoardTileFeedback tile={tile} boardId={boardId} />,
+              <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
+              <BoardTileStar tile={tile} boardId={boardId} />,
+              // <EditOutlined />,
+              <BoardTileFileDownload boardId={boardId} tile={tile} />,
+              <Popconfirm
+                onConfirm={() => setDeleted(true)}
+                title="Are you sure you want to delete this content?"
+                placement={'top'}
+                icon={<DeleteOutlined style={{ color: 'red' }}/>}
+              >
+                <DeleteOutlined />
+              </Popconfirm>
+            ]}
+          >
+            <BoardTileExtraContent tile={tile} />
+          </BoardTileFile>
+        )}
 
-      {tile.tile_type === 'note' && (
-        <BoardTileNote
-          footer={footer}
-          actions={actions !== false && [
-            <BoardTileFeedback tile={tile} boardId={boardId} />,
-            <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
-            <BoardTileStar tile={tile} boardId={boardId} />,
-            <Popconfirm
-              onConfirm={() => setDeleted(true)}
-              title="Are you sure you want to delete this content?"
-              placement={'top'}
-              icon={<DeleteOutlined style={{ color: 'red' }}/>}
-            >
-              <DeleteOutlined />
-            </Popconfirm>
-          ]}
-        >
-          <ParagraphStyled ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>{tile.note!.note}</ParagraphStyled>
-          {(tile.note as Note)!.links && (
-            <div style={{marginTop: 20}}>
-              {(tile.note as Note)!.links!.map((link: Article, index: number) => (
-                <BoardItemArticle key={index} link={link} />
-              ))}
-            </div>
-          )}
-          <BoardTileExtraContent tile={tile} />
-        </BoardTileNote>
-      )}
+        {tile.tile_type === 'note' && (
+          <BoardTileNote
+            footer={footer}
+            actions={actions !== false && [
+              <BoardTileFeedback tile={tile} boardId={boardId} />,
+              <BoardTileCommentsCount onClick={onCommentsVisibilityChange} tile={tile} />,
+              <BoardTileStar tile={tile} boardId={boardId} />,
+              <Popconfirm
+                onConfirm={() => setDeleted(true)}
+                title="Are you sure you want to delete this content?"
+                placement={'top'}
+                icon={<DeleteOutlined style={{ color: 'red' }}/>}
+              >
+                <DeleteOutlined />
+              </Popconfirm>
+            ]}
+          >
+            <ParagraphStyled ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>{tile.note!.note}</ParagraphStyled>
+            {(tile.note as Note)!.links && (
+              <div style={{marginTop: 20}}>
+                {(tile.note as Note)!.links!.map((link: Article, index: number) => (
+                  <BoardItemArticle key={index} link={link} />
+                ))}
+              </div>
+            )}
+            <BoardTileExtraContent tile={tile} />
+          </BoardTileNote>
+        )}
+      </LineLoading>
     </TileContainer>
   );
 }

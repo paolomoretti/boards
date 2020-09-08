@@ -1,9 +1,18 @@
 import { User } from './app.types';
 import { ReactNode } from 'react';
 
+export interface BoardAvatarObj {
+  high: string;
+  high_wide: string;
+  medium: string;
+  medium_wide: string;
+  small: string;
+  small_wide: string;
+}
+
 export interface Board {
   id: number;
-  avatar?: string;
+  avatar?: string | BoardAvatarObj;
   board_tags: Array<string>;
   created_at: number;
   last_activity_date: number;
@@ -11,7 +20,7 @@ export interface Board {
   new_items: number;
   owner: User;
   // access_level: "admin"
-  // description: "a"
+  description?: string;
   // displayStyle: "card"
   // email_invites: []
   // engagement_value: 293

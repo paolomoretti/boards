@@ -78,7 +78,7 @@ export default function BoardCardCover({ board }: { board: Board; }) {
 
   return (
     <Wrapper>
-      <ImageCanvas src={board.avatar!} height={230} />
+      <ImageCanvas src={board.avatar! as string} height={230} />
       <EditButton onClick={changeCover} shape="circle" icon={<EditFilled />} />
     </Wrapper>
   )
