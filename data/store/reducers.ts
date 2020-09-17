@@ -4,17 +4,19 @@ import getToken from '../../utils/data/getToken';
 import { Board, BoardTile } from '../../types/boards.types';
 import { appSearchDefault } from '../../utils/fetchers/appSearchDefault';
 
+export const DEFAULT_TILES_PARAMS = {
+  clean_description: true,
+  exclude_sources: true,
+  per_page: 15,
+  include_all_comments: false,
+  include_discussions: false,
+  include_conversations: false,
+  include_tweets: false,
+}
+
 export const initialState = Object.freeze<AppState>({
-  processing: false,
-  boardTilesParams: {
-    clean_description: true,
-    exclude_sources: true,
-    per_page: 15,
-    include_all_comments: false,
-    include_discussions: false,
-    include_conversations: false,
-    include_tweets: false,
-  },
+  loading: false,
+  boardTilesParams: DEFAULT_TILES_PARAMS,
   token: getToken(),
   currentBoardTiles: [],
   currentBoardItemsCount: 0,
@@ -25,8 +27,11 @@ export const initialState = Object.freeze<AppState>({
 
 export default (state = initialState, action: Action) => {
   switch (action.type) {
-    case ActionTypes.SET_PROCESSING:
-      return { ...state, processing: action.payload };
+    case ActionTypes.SET_LOADING:
+      return { ...state, loading: action.payload };
+
+    case ActionTypes.SET_STATE:
+      return { ...state, ...action.payload };
 
     case ActionTypes.CLOSE_CURRENT_BOARD:
       return { ...state, currentBoardItemsCount: 0, currentBoardTiles: [] };

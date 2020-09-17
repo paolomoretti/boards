@@ -4,11 +4,11 @@ import { getUser as fetchUser } from '../../utils/fetchers/getUser';
 import { Layout, message, Spin } from 'antd';
 import AppHeader from '../shared/AppHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import {getProcessing, getToken, getUser} from '../../data/store/selectors';
+import { getToken, getUser, isLoading } from '../../data/store/selectors';
 import { setToken, setUser } from '../../data/store/actions';
 import { Size } from '../../styles/vars';
 import styled from 'styled-components';
-import {LineLoading} from "../shared/LineLoading";
+import { LineLoading } from '../shared/LineLoading';
 
 const { Content } = Layout;
 const AppContent = styled(Content)`
@@ -18,7 +18,7 @@ const AppContent = styled(Content)`
 export default function LoggedPage({ children }: { children: ReactNode; }) {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
-  const isProcessing: boolean = useSelector(getProcessing);
+  const loading = useSelector(isLoading);
   const token = useSelector(getToken);
   const [ready, setReady] = useState(false);
   const [gettingUser, setGettingUser] = useState(false);
@@ -62,7 +62,7 @@ export default function LoggedPage({ children }: { children: ReactNode; }) {
           <AppHeader />
         </div>
         <AppContent>
-          <LineLoading loading={isProcessing}>
+          <LineLoading loading={loading}>
             {ready && children}
           </LineLoading>
         </AppContent>

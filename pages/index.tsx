@@ -1,14 +1,16 @@
 import * as React from 'react';
-import {lazy, useEffect, useState} from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import styled from 'styled-components';
 import LoggedPage from '../components/layouts/LoggedPage';
-import {message, Spin} from 'antd';
-import {getBoards} from '../utils/fetchers/getBoards';
-import {Size} from '../styles/vars';
-import {useDispatch, useSelector} from 'react-redux';
-import {getBoards as getBoardsList} from '../data/store/selectors';
-import {updateBoards} from '../data/store/actions';
-import {Suspense} from "react";
+import { message, Spin } from 'antd';
+import { getBoards } from '../utils/fetchers/getBoards';
+import { Size } from '../styles/vars';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBoards as getBoardsList, isLoading } from '../data/store/selectors';
+import { updateBoards } from '../data/store/actions';
+import { useApi } from '../components/shared/ApiProvider';
+import { Board } from '../types/boards.types';
+
 const Boards = lazy(() => import("../components/boards/Boards"));
 
 const Content = styled.div`
@@ -19,27 +21,21 @@ const Content = styled.div`
 
 export default function Home() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const { request } = useApi();
+  const loading: boolean = useSelector(isLoading);
   const boards = useSelector(getBoardsList);
 
   useEffect(() => {
     if (!Array.isArray(boards) && !loading) {
-      setLoading(true);
-      getBoards()
-        .then(boards => {
-          dispatch(updateBoards(boards));
-          setLoading(false);
-        })
-        .catch(err => {
-          message.error(err);
-          setLoading(false);
-        });
+      request<Array<Board>>(getBoards)
+        .then(boards => dispatch(updateBoards(boards)))
+        .catch(message.error);
     }
   });
 
   return (
     <LoggedPage>
-      <Spin spinning={!boards}>
+      <Spin spinning={!boards || loading}>
         <Content>
           <Suspense fallback={<Spin spinning={true} />}>
             <Boards boards={boards} />

@@ -111,6 +111,14 @@ export const BoardHeader = ({ board, settings }: { board: Board; settings?: bool
     }
   };
 
+  const onGoBack = () => {
+    if (settings) {
+      return router.push(`/boards/[id]`, `/boards/${board.id}`, { shallow: true });
+    } else {
+      return router.push(`/`, `/boards/${board.id}`, { shallow: true });
+    }
+  };
+
   const Filters = [
     <BoardTileTagsSelector key={'tags'} />,
     <BoardTileApprovedSelector key={'star'} />,
@@ -121,6 +129,7 @@ export const BoardHeader = ({ board, settings }: { board: Board; settings?: bool
       onSearch={onSearchChanged}
     />
   ];
+
   const Actions = isMobile() ?
     [
       <Dropdown placement="bottomCenter" trigger={['click']} visible={showMobileFilters} onVisibleChange={onMobileFiltersVisibilityChange} overlay={(
@@ -146,7 +155,7 @@ export const BoardHeader = ({ board, settings }: { board: Board; settings?: bool
     <Container onClick={onHeaderClick}>
       <PageHeaderStyled
         title={<BoardTitle board={board} />}
-        onBack={() => router.push(`/boards/[id]`, `/boards/${board.id}`, { shallow: true })}
+        onBack={onGoBack}
         style={pageHeaderStyle}
         extra={settings ? [<h3>Settings</h3>] : Actions}
       />

@@ -9,6 +9,7 @@ import { Empty } from 'antd';
 import { connect } from 'react-redux';
 import {updateCurrentBoardTiles} from "../../data/store/actions";
 import {Action} from "redux";
+import { AppState } from '../../types/app.types';
 
 const MasonryContainer = styled(Masonry)`
   padding: 10px;
@@ -23,6 +24,7 @@ const MasonryContainer = styled(Masonry)`
 interface BoardTilesListProps {
   tiles: Array<BoardTile>;
   board: Board;
+  loading: boolean;
   onLoadMore(): void;
   dispatch(action: Action): void;
 }
@@ -52,7 +54,7 @@ class BoardTilesList extends React.Component<BoardTilesListProps> {
     if (!this.props.tiles) {
       return null;
     }
-    if (this.props.tiles.length === 0) {
+    if (this.props.tiles.length === 0 && !this.props.loading) {
       return <Empty />;
     }
     return (
@@ -73,4 +75,8 @@ class BoardTilesList extends React.Component<BoardTilesListProps> {
   }
 }
 
-export default connect()(BoardTilesList);
+const mapStateToProps = (state: { app: AppState; }) => ({
+  loading: state.app.loading
+});
+
+export default connect(mapStateToProps)(BoardTilesList);

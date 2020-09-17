@@ -6,9 +6,10 @@ import {Divider, Dropdown, Menu, Space, Typography} from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { updateBoards } from '../../data/store/actions';
+import { setBoardTilesParams, updateBoards, updateCurrentBoardTiles } from '../../data/store/actions';
 import { getBoards as fetchBoards } from '../../utils/fetchers/getBoards';
 import {UserBadge} from "../shared/UserBadge";
+import { DEFAULT_TILES_PARAMS } from '../../data/store/reducers';
 
 const { Text } = Typography;
 const TitleContainer = styled.h3`
@@ -41,13 +42,19 @@ export const BoardTitle = ({ board }: BoardTitleProps) => {
   if (!boards) {
     fetchBoards().then(boards => dispatch(updateBoards(boards)));
   }
+
+  const onChangeBoard = () => {
+    dispatch(setBoardTilesParams(DEFAULT_TILES_PARAMS));
+    dispatch(updateCurrentBoardTiles([]));
+  }
+
   const menu = (
     <Menu selectable={true} style={{maxHeight: 300, overflowY: 'auto'}}>
       {!boards ? null : boards!.map((board: Board) => (
         currentBoard && currentBoard.id === board.id ? null : (
           <Menu.Item key={board.id}>
             <Link href={'/boards/[id]'} as={`/boards/${board.id}`}>
-              <a>{board.name}</a>
+              <a onClick={onChangeBoard}>{board.name}</a>
             </Link>
           </Menu.Item>
         )

@@ -22,7 +22,7 @@ const Line = styled.div`
   }
   position: relative;
   
-  .bar {
+  > .bar {
     position: absolute;
     top: 0;
     animation-name: loader-animation;
@@ -35,14 +35,14 @@ const Line = styled.div`
     z-index: 10;
   }
   
-  &.loading .bar {
+  &.loading > .bar {
     display: block;
   }
 `;
 
 export function LineLoading({ loading , children }: { loading?: boolean; children: ReactNode; }) {
   return (
-    <Line className={loading ? 'loading line-loader-animated' : 'idle'}>
+    <Line className={loading === true ? 'loading line-loader-animated' : 'idle'}>
       <div className="bar" />
       {children}
     </Line>

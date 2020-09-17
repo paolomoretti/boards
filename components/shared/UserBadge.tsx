@@ -16,6 +16,9 @@ const StyledAvatar = styled(Avatar)`
 `;
 export function UserBadge(props: UserBadgeProps) {
   const { user } = props;
+  if (!user || !user.avatar) {
+    return null;
+  }
   return (
     <Container>
       <Tooltip title={user.full_name}>

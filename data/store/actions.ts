@@ -1,9 +1,10 @@
-import { ModalType, User } from '../../types/app.types';
+import { User } from '../../types/app.types';
 import { Board, BoardTile, GetBoardTilesParams } from '../../types/boards.types';
 
 export enum ActionTypes {
   // App / generic
-  SET_PROCESSING,
+  SET_LOADING,
+  SET_STATE,
   SET_TOKEN,
   SHOW_MODAL,
   SET_APP_SEARCH,
@@ -34,9 +35,9 @@ export type Action = {
   payload?: any;
 };
 
-export const setProcessing = (isProcessing: boolean) => ({
-  type: ActionTypes.SET_PROCESSING,
-  payload: isProcessing
+export const setLoading = (isLoading: boolean) => ({
+  type: ActionTypes.SET_LOADING,
+  payload: isLoading
 });
 
 export const setBoardTilesParams = (params: Partial<GetBoardTilesParams>) => ({
@@ -74,7 +75,7 @@ export const updateBoards = (boards: Array<Board>) => ({
   payload: boards
 });
 
-export const setCurrentBoard = (board: Board) => ({
+export const setCurrentBoard = (board: Board | null) => ({
   type: ActionTypes.SET_CURRENT_BOARD,
   payload: board
 });
@@ -91,16 +92,6 @@ export const addBoardContent = (content: { text: string; boardId: number; user_t
 export const setToken = (token: string | undefined) => ({
   type: ActionTypes.SET_USER,
   payload: token
-});
-
-export const showModal = (modal: ModalType, params: Record<string, any> = {}) => ({
-  type: ActionTypes.SHOW_MODAL,
-  payload: { modal, params }
-});
-
-export const updateAppSearch = (keyword: string) => ({
-  type: ActionTypes.SET_APP_SEARCH,
-  payload: keyword
 });
 
 // User

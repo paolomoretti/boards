@@ -58,6 +58,7 @@ export default function BoardTileTagsSelector() {
   };
 
   return (
+    // @ts-ignore
     <Dropdown arrow={true} onVisibleChange={onVisibilityChange} placement="bottomCenter" key={10} overlay={(
       <Menu style={menuStyles}>
         <Menu.Item key={'filter-input'} onClickCapture={stopBubblingUp}>

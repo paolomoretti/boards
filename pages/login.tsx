@@ -1,13 +1,16 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {Button, Card, Form, Input, Layout, message, Spin} from 'antd';
-import {useRouter} from 'next/router';
+import { Button, Card, Form, Input, Layout, message, Spin } from 'antd';
+import { useRouter } from 'next/router';
 import * as Cookies from 'js-cookie';
-import {useDispatch} from 'react-redux';
-import {setToken, setUser} from '../data/store/actions';
-import {ValidateErrorEntity} from 'rc-field-form/lib/interface';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken, setUser } from '../data/store/actions';
+import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import styled from 'styled-components';
 import GuestPage from '../components/layouts/GuestPage';
+import { login } from '../utils/fetchers/login';
+import { useApi } from '../components/shared/ApiProvider';
+import { isLoading } from '../data/store/selectors';
+import { User } from '../types/app.types';
 
 const { Content } = Layout;
 const LoginCard = styled(Card)`
@@ -16,39 +19,25 @@ const LoginCard = styled(Card)`
 `;
 export default function Login() {
   const dispatch = useDispatch();
+  const { request } = useApi();
+  const loading: boolean = useSelector(isLoading);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
     const { email, password } = values;
-    setLoading(true);
 
-    const loginData = await fetch('/api/v3/sign_in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: {
-          email,
-          password,
-          password_confirmation: password
-        }
-      })
-    })
-      .then(res => res.json())
-      .catch(err => err);
+    const loginData = await request<{ errors?: string; error?: string; }>(login, email, password);
 
-    setLoading(false);
     if (loginData && loginData.errors) {
       message.error(loginData.errors);
     } else if (loginData.error) {
       message.error(loginData.error);
     } else {
       // Logged in correctly
-      dispatch(setUser(loginData[0].user))
-      dispatch(setToken(loginData[0].auth_token))
-      Cookies.set('token', loginData[0].auth_token);
+      const loggedInData: { user: User; auth_token: string; } = (loginData as { user: User; auth_token: string; }[])[0];
+      dispatch(setUser(loggedInData.user))
+      dispatch(setToken(loggedInData.auth_token))
+      Cookies.set('token', loggedInData.auth_token);
       router.push('/');
     }
   };
